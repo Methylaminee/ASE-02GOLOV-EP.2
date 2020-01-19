@@ -1,0 +1,12 @@
+.\lib_maintenance.o: elevator\maintenance\lib_maintenance.c
+.\lib_maintenance.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\lib_maintenance.o: elevator\maintenance\maintenance.h
+.\lib_maintenance.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\lib_maintenance.o: elevator\maintenance\../../led/led.h
+.\lib_maintenance.o: elevator\maintenance\../../GLCD/glcd.h
+.\lib_maintenance.o: C:\Keil_v5\ARM\INC\NXP\LPC17xx\LPC17xx.h
+.\lib_maintenance.o: C:\Keil_v5\ARM\CMSIS\Include\core_cm3.h
+.\lib_maintenance.o: C:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h
+.\lib_maintenance.o: C:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h
+.\lib_maintenance.o: C:\Keil_v5\ARM\INC\NXP\LPC17xx\system_LPC17xx.h
+.\lib_maintenance.o: elevator\maintenance\../../timer/timer.h
