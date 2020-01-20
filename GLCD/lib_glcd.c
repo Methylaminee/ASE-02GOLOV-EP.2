@@ -4,8 +4,8 @@
 **
 **--------------File Info-------------------------------------------------------------------------------
 ** File name:			GLCD.c
-** Descriptions:		Has been tested SSD1289¡¢ILI9320¡¢R61505U¡¢SSD1298¡¢ST7781¡¢SPFD5408B¡¢ILI9325¡¢ILI9328¡¢
-**						HX8346A¡¢HX8347A
+** Descriptions:		Has been tested SSD1289ï¿½ï¿½ILI9320ï¿½ï¿½R61505Uï¿½ï¿½SSD1298ï¿½ï¿½ST7781ï¿½ï¿½SPFD5408Bï¿½ï¿½ILI9325ï¿½ï¿½ILI9328ï¿½ï¿½
+**						HX8346Aï¿½ï¿½HX8347A
 **------------------------------------------------------------------------------------------------------
 ** Created by:			AVRman
 ** Created date:		2012-3-10
@@ -13,10 +13,10 @@
 ** Descriptions:		The original version
 **
 **------------------------------------------------------------------------------------------------------
-** Modified by:			
-** Modified date:	
-** Version:
-** Descriptions:		
+** Modified by:			Matteo Minotti
+** Modified date:		20/01/2020
+** Version:				2.0
+** Descriptions:		simple arrangement for screen usage
 ********************************************************************************************************/
 
 /* Includes ------------------------------------------------------------------*/
@@ -55,21 +55,15 @@ static uint8_t LCD_Code;
 static void LCD_Configuration(void)
 {
 	/* Configure the LCD Control pins */
-	LPC_GPIO2->FIODIR   |= 0xFF;
-	/* EN = P0.19 , LE = P0.20 , DIR = P0.21 , CS = P0.22 , RS = P0.23 */
-	/* WR = P0.24 , RD = P0.25 , DB[0.7] = P2.0...P2.7 , DB[8.15]= P2.0...P2.7 */  
-	LPC_GPIO0->FIODIR   |= (1<<19) | (1<<20) | (1<<21) | (1<<22) | (1<<23) | (1<<24) | (1<<25) | (1<<7);
-  LPC_GPIO0->FIOSET   |= (1<<19) | (1<<20) | (1<<21) | (1<<22) | (1<<23) | (1<<24) | (1<<25) | (1<<7);
-	
-	LCD_RESET(0);
-	delay_ms(10);
-	LCD_RESET(1);
-	delay_ms(10);
+	/* EN = P0.19 , LE = P0.20 , DIR = P0.21 , CS = P0.22 , RS = P0.23 , RS = P0.23 */
+	/* RS = P0.23 , WR = P0.24 , RD = P0.25 , DB[0.7] = P2.0...P2.7 , DB[8.15]= P2.0...P2.7 */  
+	LPC_GPIO0->FIODIR   |= 0x03f80000;
+	LPC_GPIO0->FIOSET    = 0x03f80000;
 }
 
 /*******************************************************************************
 * Function Name  : LCD_Send
-* Description    : LCDÐ´Êý¾Ý
+* Description    : LCDÐ´ï¿½ï¿½ï¿½ï¿½
 * Input          : - byte: byte to be sent
 * Output         : None
 * Return         : None
@@ -102,10 +96,10 @@ static void wait_delay(int count)
 
 /*******************************************************************************
 * Function Name  : LCD_Read
-* Description    : LCD¶ÁÊý¾Ý
+* Description    : LCDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 * Input          : - byte: byte to be read
 * Output         : None
-* Return         : ·µ»Ø¶ÁÈ¡µ½µÄÊý¾Ý
+* Return         : ï¿½ï¿½ï¿½Ø¶ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 * Attention		 : None
 *******************************************************************************/
 static __attribute__((always_inline)) uint16_t LCD_Read (void) 
@@ -126,8 +120,8 @@ static __attribute__((always_inline)) uint16_t LCD_Read (void)
 
 /*******************************************************************************
 * Function Name  : LCD_WriteIndex
-* Description    : LCDÐ´¼Ä´æÆ÷µØÖ·
-* Input          : - index: ¼Ä´æÆ÷µØÖ·
+* Description    : LCDÐ´ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½Ö·
+* Input          : - index: ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½Ö·
 * Output         : None
 * Return         : None
 * Attention		 : None
@@ -147,8 +141,8 @@ static __attribute__((always_inline)) void LCD_WriteIndex(uint16_t index)
 
 /*******************************************************************************
 * Function Name  : LCD_WriteData
-* Description    : LCDÐ´¼Ä´æÆ÷Êý¾Ý
-* Input          : - index: ¼Ä´æÆ÷Êý¾Ý
+* Description    : LCDÐ´ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* Input          : - index: ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 * Output         : None
 * Return         : None
 * Attention		 : None
@@ -166,10 +160,10 @@ static __attribute__((always_inline)) void LCD_WriteData(uint16_t data)
 
 /*******************************************************************************
 * Function Name  : LCD_ReadData
-* Description    : ¶ÁÈ¡¿ØÖÆÆ÷Êý¾Ý
+* Description    : ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 * Input          : None
 * Output         : None
-* Return         : ·µ»Ø¶ÁÈ¡µ½µÄÊý¾Ý
+* Return         : ï¿½ï¿½ï¿½Ø¶ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 * Attention		 : None
 *******************************************************************************/
 static __attribute__((always_inline)) uint16_t LCD_ReadData(void)
@@ -309,73 +303,80 @@ void LCD_Initialization(void) {
 	DeviceCode = LCD_ReadReg(0x0000);
 	if( DeviceCode == 0x9325 || DeviceCode == 0x9328 ) {
 		LCD_Code = ILI9325;
-    LCD_WriteReg(0xe7, 0x0010); /* set SRAM internal timing */
-    LCD_WriteReg(0x01, 0x0100); /* set Driver Output Control */
-    LCD_WriteReg(0x02, 0x0700); /* set 1 line inversion */
-    LCD_WriteReg(0x03, 0x1030); /* set GRAM write direction and BGR=1 */
-    LCD_WriteReg(0x04, 0x0000); /* Resize register */
-    LCD_WriteReg(0x08, 0x0207); /* set the back porch and front porch */
-    LCD_WriteReg(0x09, 0x0000); /* set non-display area refresh cycle ISC[3:0] */
-    LCD_WriteReg(0x0A, 0x0000); /* FMARK function */
-    LCD_WriteReg(0x0C, 0x0000); /* RGB interface setting */
-    LCD_WriteReg(0x0D, 0x0000); /* Frame marker Position */
-    LCD_WriteReg(0x0F, 0x0000); /* RGB interface polarity */
-    /*************Power On sequence ****************/
-    LCD_WriteReg(0x10, 0x0000); /* SAP, BT[3:0], AP, DSTB, SLP, STB */
-    LCD_WriteReg(0x11, 0x0007); /* DC1[2:0], DC0[2:0], VC[2:0] */
-    LCD_WriteReg(0x12, 0x0000); /* VREG1OUT voltage */
-    LCD_WriteReg(0x13, 0x0000); /* VDV[4:0] for VCOM amplitude */
-    LCD_WriteReg(0x07, 0x0001);
-    delay_ms(200); 
-    /* Dis-charge capacitor power voltage */
-    LCD_WriteReg(0x10, 0x1090); /* SAP, BT[3:0], AP, DSTB, SLP, STB */
-    LCD_WriteReg(0x11, 0x0227); /* Set DC1[2:0], DC0[2:0], VC[2:0] */
-    delay_ms(50);                          /* Delay 50ms */
-    LCD_WriteReg(0x12, 0x001F); 
-    delay_ms(50);                          /* Delay 50ms */
-    LCD_WriteReg(0x13, 0x1500); /* VDV[4:0] for VCOM amplitude */
-    LCD_WriteReg(0x29, 0x0027); /* 04 VCM[5:0] for VCOMH */
-    LCD_WriteReg(0x2B, 0x000D); /* Set Frame Rate */
-    delay_ms(50);                          /* Delay 50ms */
-    LCD_WriteReg(0x20, 0x0000); /* GRAM horizontal Address */
-    LCD_WriteReg(0x21, 0x0000); /* GRAM Vertical Address */
-    /* ----------- Adjust the Gamma Curve (1st set) ---------- */
-		LCD_WriteReg(0x30, 0x0000);
-		LCD_WriteReg(0x31, 0x0603);
-		LCD_WriteReg(0x32, 0x0206);
-		LCD_WriteReg(0x35, 0x0206);
-		LCD_WriteReg(0x36, 0x0004);
-		LCD_WriteReg(0x37, 0x0105);
-		LCD_WriteReg(0x38, 0x0401);
-		LCD_WriteReg(0x39, 0x0707);
-		LCD_WriteReg(0x3C, 0x0602);
-		LCD_WriteReg(0x3D, 0x0004);
-    /* ------------------ Set GRAM area --------------- */
-    LCD_WriteReg(0x50, 0x0000); /* Horizontal GRAM Start Address */
-    LCD_WriteReg(0x51, 0x00EF); /* Horizontal GRAM End Address */
-    LCD_WriteReg(0x52, 0x0000); /* Vertical GRAM Start Address */
-    LCD_WriteReg(0x53, 0x013F); /* Vertical GRAM Start Address */
-    LCD_WriteReg(0x60, 0xA700); /* Gate Scan Line */
-    LCD_WriteReg(0x61, 0x0001); /* NDL,VLE, REV */
-    LCD_WriteReg(0x6A, 0x0000); /* set scrolling line */
-    /* -------------- Partial Display Control --------- */
-    LCD_WriteReg(0x80, 0x0000);
-    LCD_WriteReg(0x81, 0x0000);
-    LCD_WriteReg(0x82, 0x0000);
-    LCD_WriteReg(0x83, 0x0000);
-    LCD_WriteReg(0x84, 0x0000);
-    LCD_WriteReg(0x85, 0x0000);
-    /* -------------- Panel Control ------------------- */
-    LCD_WriteReg(0x90, 0x0010);
-    LCD_WriteReg(0x92, 0x0600);
-    LCD_WriteReg(0x07, 0x0133); /* 262K color and display ON */
+    LCD_WriteReg(0x00e7,0x0010);      
+		LCD_WriteReg(0x0000,0x0001);  	/* start internal osc */
+		LCD_WriteReg(0x0001,0x0100);     
+		LCD_WriteReg(0x0002,0x0700); 	/* power on sequence */
+		LCD_WriteReg(0x0003,(1<<12)|(1<<5)|(1<<4)|(0<<3) ); 	/* importance */
+		LCD_WriteReg(0x0004,0x0000);                                   
+		LCD_WriteReg(0x0008,0x0207);	           
+		LCD_WriteReg(0x0009,0x0000);         
+		LCD_WriteReg(0x000a,0x0000); 	/* display setting */        
+		LCD_WriteReg(0x000c,0x0001);	/* display setting */        
+		LCD_WriteReg(0x000d,0x0000); 			        
+		LCD_WriteReg(0x000f,0x0000);
+		/* Power On sequence */
+		LCD_WriteReg(0x0010,0x0000);   
+		LCD_WriteReg(0x0011,0x0007);
+		LCD_WriteReg(0x0012,0x0000);                                                                 
+		LCD_WriteReg(0x0013,0x0000);                 
+		delay_ms(50);  /* delay 50 ms */		
+		LCD_WriteReg(0x0010,0x1590);   
+		LCD_WriteReg(0x0011,0x0227);
+		delay_ms(50);  /* delay 50 ms */		
+		LCD_WriteReg(0x0012,0x009c);                  
+		delay_ms(50);  /* delay 50 ms */		
+		LCD_WriteReg(0x0013,0x1900);   
+		LCD_WriteReg(0x0029,0x0023);
+		LCD_WriteReg(0x002b,0x000e);
+		delay_ms(50);  /* delay 50 ms */		
+		LCD_WriteReg(0x0020,0x0000);                                                            
+		LCD_WriteReg(0x0021,0x0000);           
+		delay_ms(50);  /* delay 50 ms */		
+		LCD_WriteReg(0x0030,0x0007); 
+		LCD_WriteReg(0x0031,0x0707);   
+		LCD_WriteReg(0x0032,0x0006);
+		LCD_WriteReg(0x0035,0x0704);
+		LCD_WriteReg(0x0036,0x1f04); 
+		LCD_WriteReg(0x0037,0x0004);
+		LCD_WriteReg(0x0038,0x0000);        
+		LCD_WriteReg(0x0039,0x0706);     
+		LCD_WriteReg(0x003c,0x0701);
+		LCD_WriteReg(0x003d,0x000f);
+		delay_ms(50);  /* delay 50 ms */		
+		LCD_WriteReg(0x0050,0x0000);        
+		LCD_WriteReg(0x0051,0x00ef);   
+		LCD_WriteReg(0x0052,0x0000);     
+		LCD_WriteReg(0x0053,0x013f);
+		LCD_WriteReg(0x0060,0xa700);        
+		LCD_WriteReg(0x0061,0x0001); 
+		LCD_WriteReg(0x006a,0x0000);
+		LCD_WriteReg(0x0080,0x0000);
+		LCD_WriteReg(0x0081,0x0000);
+		LCD_WriteReg(0x0082,0x0000);
+		LCD_WriteReg(0x0083,0x0000);
+		LCD_WriteReg(0x0084,0x0000);
+		LCD_WriteReg(0x0085,0x0000);
+		  
+		LCD_WriteReg(0x0090,0x0010);     
+		LCD_WriteReg(0x0092,0x0000);  
+		LCD_WriteReg(0x0093,0x0003);
+		LCD_WriteReg(0x0095,0x0110);
+		LCD_WriteReg(0x0097,0x0000);        
+		LCD_WriteReg(0x0098,0x0000);  
+		/* display on sequence */    
+		LCD_WriteReg(0x0007,0x0133);
+		
+		LCD_WriteReg(0x0020,0x0000);  /* ï¿½ï¿½ï¿½ï¿½Ö·0 */                                                          
+		LCD_WriteReg(0x0021,0x0000);  /* ï¿½ï¿½ï¿½ï¿½Ö·0 */ 
 	}					
-  delay_ms(250);   /* delay 250 ms */	
+  delay_ms(50);   /* delay 50 ms */	
+	LCD_Clear(Black);
 }
 
 /*******************************************************************************
 * Function Name  : LCD_Clear
-* Description    : ½«ÆÁÄ»Ìî³ä³ÉÖ¸¶¨µÄÑÕÉ«£¬ÈçÇåÆÁ£¬ÔòÌî³ä 0xffff
+* Description    : ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0xffff
 * Input          : - Color: Screen Color
 * Output         : None
 * Return         : None
@@ -413,11 +414,11 @@ void LCD_Clear(uint16_t Color)
 
 /******************************************************************************
 * Function Name  : LCD_BGR2RGB
-* Description    : RRRRRGGGGGGBBBBB ¸ÄÎª BBBBBGGGGGGRRRRR ¸ñÊ½
-* Input          : - color: BRG ÑÕÉ«Öµ  
+* Description    : RRRRRGGGGGGBBBBB ï¿½ï¿½Îª BBBBBGGGGGGRRRRR ï¿½ï¿½Ê½
+* Input          : - color: BRG ï¿½ï¿½É«Öµ  
 * Output         : None
-* Return         : RGB ÑÕÉ«Öµ
-* Attention		 : ÄÚ²¿º¯Êýµ÷ÓÃ
+* Return         : RGB ï¿½ï¿½É«Öµ
+* Attention		 : ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 *******************************************************************************/
 static uint16_t LCD_BGR2RGB(uint16_t color)
 {
@@ -434,7 +435,7 @@ static uint16_t LCD_BGR2RGB(uint16_t color)
 
 /******************************************************************************
 * Function Name  : LCD_GetPoint
-* Description    : »ñÈ¡Ö¸¶¨×ù±êµÄÑÕÉ«Öµ
+* Description    : ï¿½ï¿½È¡Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«Öµ
 * Input          : - Xpos: Row Coordinate
 *                  - Xpos: Line Coordinate 
 * Output         : None
@@ -481,7 +482,7 @@ uint16_t LCD_GetPoint(uint16_t Xpos,uint16_t Ypos)
 
 /******************************************************************************
 * Function Name  : LCD_SetPoint
-* Description    : ÔÚÖ¸¶¨×ù±ê»­µã
+* Description    : ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ê»­ï¿½ï¿½
 * Input          : - Xpos: Row Coordinate
 *                  - Ypos: Line Coordinate 
 * Output         : None
@@ -501,79 +502,79 @@ void LCD_SetPoint(uint16_t Xpos,uint16_t Ypos,uint16_t point)
 /******************************************************************************
 * Function Name  : LCD_DrawLine
 * Description    : Bresenham's line algorithm
-* Input          : - x1: AµãÐÐ×ù±ê
-*                  - y1: AµãÁÐ×ù±ê 
-*				   - x2: BµãÐÐ×ù±ê
-*				   - y2: BµãÁÐ×ù±ê 
-*				   - color: ÏßÑÕÉ«
+* Input          : - x1: Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+*                  - y1: Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+*				   - x2: Bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+*				   - y2: Bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+*				   - color: ï¿½ï¿½ï¿½ï¿½É«
 * Output         : None
 * Return         : None
 * Attention		 : None
 *******************************************************************************/	 
 void LCD_DrawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t color )
 {
-    short dx,dy;      /* ¶¨ÒåX YÖáÉÏÔö¼ÓµÄ±äÁ¿Öµ */
-    short temp;       /* Æðµã ÖÕµã´óÐ¡±È½Ï ½»»»Êý¾ÝÊ±µÄÖÐ¼ä±äÁ¿ */
+    short dx,dy;      /* ï¿½ï¿½ï¿½ï¿½X Yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓµÄ±ï¿½ï¿½ï¿½Öµ */
+    short temp;       /* ï¿½ï¿½ï¿½ ï¿½Õµï¿½ï¿½Ð¡ï¿½È½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½ */
 
-    if( x0 > x1 )     /* XÖáÉÏÆðµã´óÓÚÖÕµã ½»»»Êý¾Ý */
+    if( x0 > x1 )     /* Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
     {
 	    temp = x1;
 		x1 = x0;
 		x0 = temp;   
     }
-    if( y0 > y1 )     /* YÖáÉÏÆðµã´óÓÚÖÕµã ½»»»Êý¾Ý */
+    if( y0 > y1 )     /* Yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
     {
 		temp = y1;
 		y1 = y0;
 		y0 = temp;   
     }
   
-	dx = x1-x0;       /* XÖá·½ÏòÉÏµÄÔöÁ¿ */
-	dy = y1-y0;       /* YÖá·½ÏòÉÏµÄÔöÁ¿ */
+	dx = x1-x0;       /* Xï¿½á·½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ */
+	dy = y1-y0;       /* Yï¿½á·½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ */
 
-    if( dx == 0 )     /* XÖáÉÏÃ»ÓÐÔöÁ¿ »­´¹Ö±Ïß */ 
+    if( dx == 0 )     /* Xï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ */ 
     {
         do
         { 
-            LCD_SetPoint(x0, y0, color);   /* ÖðµãÏÔÊ¾ Ãè´¹Ö±Ïß */
+            LCD_SetPoint(x0, y0, color);   /* ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ ï¿½è´¹Ö±ï¿½ï¿½ */
             y0++;
         }
         while( y1 >= y0 ); 
 		return; 
     }
-    if( dy == 0 )     /* YÖáÉÏÃ»ÓÐÔöÁ¿ »­Ë®Æ½Ö±Ïß */ 
+    if( dy == 0 )     /* Yï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ë®Æ½Ö±ï¿½ï¿½ */ 
     {
         do
         {
-            LCD_SetPoint(x0, y0, color);   /* ÖðµãÏÔÊ¾ ÃèË®Æ½Ïß */
+            LCD_SetPoint(x0, y0, color);   /* ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ ï¿½ï¿½Ë®Æ½ï¿½ï¿½ */
             x0++;
         }
         while( x1 >= x0 ); 
 		return;
     }
-	/* ²¼À¼É­ººÄ·(Bresenham)Ëã·¨»­Ïß */
-    if( dx > dy )                         /* ¿¿½üXÖá */
+	/* ï¿½ï¿½ï¿½ï¿½É­ï¿½ï¿½Ä·(Bresenham)ï¿½ã·¨ï¿½ï¿½ï¿½ï¿½ */
+    if( dx > dy )                         /* ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½ */
     {
-	    temp = 2 * dy - dx;               /* ¼ÆËãÏÂ¸öµãµÄÎ»ÖÃ */         
+	    temp = 2 * dy - dx;               /* ï¿½ï¿½ï¿½ï¿½ï¿½Â¸ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ */         
         while( x0 != x1 )
         {
-	        LCD_SetPoint(x0,y0,color);    /* »­Æðµã */ 
-	        x0++;                         /* XÖáÉÏ¼Ó1 */
-	        if( temp > 0 )                /* ÅÐ¶ÏÏÂÏÂ¸öµãµÄÎ»ÖÃ */
+	        LCD_SetPoint(x0,y0,color);    /* ï¿½ï¿½ï¿½ï¿½ï¿½ */ 
+	        x0++;                         /* Xï¿½ï¿½ï¿½Ï¼ï¿½1 */
+	        if( temp > 0 )                /* ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Â¸ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ */
 	        {
-	            y0++;                     /* ÎªÓÒÉÏÏàÁÚµã£¬¼´£¨x0+1,y0+1£© */ 
+	            y0++;                     /* Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµã£¬ï¿½ï¿½ï¿½ï¿½x0+1,y0+1ï¿½ï¿½ */ 
 	            temp += 2 * dy - 2 * dx; 
 	 	    }
             else         
             {
-			    temp += 2 * dy;           /* ÅÐ¶ÏÏÂÏÂ¸öµãµÄÎ»ÖÃ */  
+			    temp += 2 * dy;           /* ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Â¸ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ */  
 			}       
         }
         LCD_SetPoint(x0,y0,color);
     }  
     else
     {
-	    temp = 2 * dx - dy;                      /* ¿¿½üYÖá */       
+	    temp = 2 * dx - dy;                      /* ï¿½ï¿½ï¿½ï¿½Yï¿½ï¿½ */       
         while( y0 != y1 )
         {
 	 	    LCD_SetPoint(x0,y0,color);     
@@ -594,12 +595,12 @@ void LCD_DrawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t
 
 /******************************************************************************
 * Function Name  : LCD_DrawRectangle
-* Description    : ÔÚÖ¸¶¨×ù±êÏÔÊ¾×Ö·û´®
-* Input          : - Xpos: ÐÐ×ù±ê
-*                  - Ypos: ÁÐ×ù±ê 
-*				   - str: ×Ö·û´®
-*				   - charColor: ×Ö·ûÑÕÉ«   
-*				   - bkColor: ±³¾°ÑÕÉ« 
+* Description    : ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Ö·ï¿½ï¿½ï¿½
+* Input          : - Xpos: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+*                  - Ypos: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+*				   - str: ï¿½Ö·ï¿½ï¿½ï¿½
+*				   - charColor: ï¿½Ö·ï¿½ï¿½ï¿½É«   
+*				   - bkColor: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É« 
 * Output         : None
 * Return         : None
 * Attention		 : None
@@ -616,12 +617,12 @@ void LCD_DrawRectangle(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t He
 
 /******************************************************************************
 * Function Name  : PutChar
-* Description    : ½«LcdÆÁÉÏÈÎÒâÎ»ÖÃÏÔÊ¾Ò»¸ö×Ö·û
-* Input          : - Xpos: Ë®Æ½×ø±ê 
-*                  - Ypos: ´¹Ö±×ø±ê  
-*				   - ASCI: ÏÔÊ¾µÄ×Ö·û
-*				   - charColor: ×Ö·ûÑÕÉ«   
-*				   - bkColor: ±³¾°ÑÕÉ« 
+* Description    : ï¿½ï¿½Lcdï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½Ê¾Ò»ï¿½ï¿½ï¿½Ö·ï¿½
+* Input          : - Xpos: Ë®Æ½ï¿½ï¿½ï¿½ï¿½ 
+*                  - Ypos: ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½  
+*				   - ASCI: ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ö·ï¿½
+*				   - charColor: ï¿½Ö·ï¿½ï¿½ï¿½É«   
+*				   - bkColor: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É« 
 * Output         : None
 * Return         : None
 * Attention		 : None
@@ -630,7 +631,7 @@ void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, ui
 {
 	uint16_t i, j;
     uint8_t buffer[16], tmp_char;
-    GetASCIICode(buffer,ASCI);  /* È¡×ÖÄ£Êý¾Ý */
+    GetASCIICode(buffer,ASCI);  /* È¡ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ */
     for( i=0; i<16; i++ )
     {
         tmp_char = buffer[i];
@@ -638,11 +639,11 @@ void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, ui
         {
             if( (tmp_char >> 7 - j) & 0x01 == 0x01 )
             {
-                LCD_SetPoint( Xpos + j, Ypos + i, charColor );  /* ×Ö·ûÑÕÉ« */
+                LCD_SetPoint( Xpos + j, Ypos + i, charColor );  /* ï¿½Ö·ï¿½ï¿½ï¿½É« */
             }
             else
             {
-                LCD_SetPoint( Xpos + j, Ypos + i, bkColor );  /* ±³¾°ÑÕÉ« */
+                LCD_SetPoint( Xpos + j, Ypos + i, bkColor );  /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É« */
             }
         }
     }
@@ -650,12 +651,12 @@ void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, ui
 
 /******************************************************************************
 * Function Name  : GUI_Text
-* Description    : ÔÚÖ¸¶¨×ù±êÏÔÊ¾×Ö·û´®
-* Input          : - Xpos: ÐÐ×ù±ê
-*                  - Ypos: ÁÐ×ù±ê 
-*				   - str: ×Ö·û´®
-*				   - charColor: ×Ö·ûÑÕÉ«   
-*				   - bkColor: ±³¾°ÑÕÉ« 
+* Description    : ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Ö·ï¿½ï¿½ï¿½
+* Input          : - Xpos: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+*                  - Ypos: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+*				   - str: ï¿½Ö·ï¿½ï¿½ï¿½
+*				   - charColor: ï¿½Ö·ï¿½ï¿½ï¿½É«   
+*				   - bkColor: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É« 
 * Output         : None
 * Return         : None
 * Attention		 : None

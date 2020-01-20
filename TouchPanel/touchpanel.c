@@ -41,31 +41,14 @@ Coordinate DisplaySample[3] = {{ 45,  45},
 
 
 /*******************************************************************************
-* Function Name  : LPC17xx_SSP0_SetSpeed
+* Function Name  : LPC17xx_SPI_SetSpeed
 * Description    : Set clock speed to desired value
 * Input          : - speed: speed
 * Output         : None
 * Return         : None
 * Attention		 : None
 *******************************************************************************/
-void LPC17xx_SSP0_SetSpeed (uint8_t speed)
-{
-	speed &= 0xFE;
-	if ( speed < 2  ) {
-		speed = 2 ;
-	}
-	LPC_SSP0->CPSR = speed;
-}
-
-/*******************************************************************************
-* Function Name  : LPC17xx_SSP1_SetSpeed
-* Description    : Set clock speed to desired value
-* Input          : - speed: speed
-* Output         : None
-* Return         : None
-* Attention		 : None
-*******************************************************************************/
-void LPC17xx_SSP1_SetSpeed (uint8_t speed)
+void LPC17xx_SPI_SetSpeed (uint8_t speed)
 {
 	speed &= 0xFE;
 	if ( speed < 2  ) {
@@ -76,78 +59,45 @@ void LPC17xx_SSP1_SetSpeed (uint8_t speed)
 
 /*******************************************************************************
 * Function Name  : ADS7843_SPI_Init
-* Description    : ADS7843 SPI ³õÊ¼»¯
+* Description    : ADS7843 SPI ï¿½ï¿½Ê¼ï¿½ï¿½
 * Input          : None
 * Output         : None
 * Return         : None
 * Attention		 : None
 *******************************************************************************/
-//static void ADS7843_SPI_Init(void) 
-//{ 
-//	volatile uint32_t dummy;
-
-//	/* Initialize and enable the SSP1 Interface module. */
-//	LPC_SC->PCONP |= (1 << 10);          /* Enable power to SSPI1 block  */
-
-//	/* P0.7 SCK, P0.8 MISO, P0.9 MOSI are SSP pins. */
-//	LPC_PINCON->PINSEL0 &= ~((3UL<<14) | (3UL<<16) | (3UL<<18)) ; /* P0.7,P0.8,P0.9 cleared */
-//	LPC_PINCON->PINSEL0 |=  (2UL<<14) | (2UL<<16) | (2UL<<18);    /* P0.7 SCK1,P0.8 MISO1,P0.9 MOSI1 */
-
-//	/* PCLK_SSP1=CCLK */
-//	LPC_SC->PCLKSEL0 &= ~(3<<20);               /* PCLKSP0 = CCLK/4 (18MHz) */
-//	LPC_SC->PCLKSEL0 |=  (1<<20);               /* PCLKSP0 = CCLK   (72MHz) */
-
-//	LPC_SSP1->CR0  = 0x0007;                    /* 8Bit, CPOL=0, CPHA=0         */
-//	LPC_SSP1->CR1  = 0x0002;                    /* SSP1 enable, master          */
-
-//	LPC17xx_SSP1_SetSpeed ( SPI_SPEED_500kHz );
-
-//	/* wait for busy gone */
-//	while( LPC_SSP1->SR & ( 1 << SSPSR_BSY ) );
-
-//	/* drain SPI RX FIFO */
-//	while( LPC_SSP1->SR & ( 1 << SSPSR_RNE ) )
-//	{
-//		dummy = LPC_SSP1->DR;
-//	}
-//}
-
-static void XPT2046_SPI_Init(void) 
+static void ADS7843_SPI_Init(void) 
 { 
 	volatile uint32_t dummy;
 
-	/* Initialize and enable the SSP0 Interface module. */
-	LPC_SC->PCONP |= (1 << 21);          /* Enable power to SSPI0 block  */
+	/* Initialize and enable the SSP1 Interface module. */
+	LPC_SC->PCONP |= (1 << 10);          /* Enable power to SSPI1 block  */
 
-	/* P0.15 SCK, P0.17 MISO, P0.18 MOSI are SSP pins. FOR Beemer V2.0*/
-	LPC_PINCON->PINSEL0 &= ~(3UL<<30);	/* P0.15,P0.17,P0.18	cleared */
-	LPC_PINCON->PINSEL0 |=  (2UL<<30); /* P0.15 SCK0,P0.17 MISO0,P0.18 MOSI0 */
-	LPC_PINCON->PINSEL1 &= ~((3UL<<2) | (3UL<<4));	/* P0.15,P0.17,P0.18	cleared */
-	LPC_PINCON->PINSEL1 |=  (2UL<<2) | (2UL<<4); /* P0.15 SCK0,P0.17 MISO0,P0.18 MOSI0 */
+	/* P0.7 SCK, P0.8 MISO, P0.9 MOSI are SSP pins. */
+	LPC_PINCON->PINSEL0 &= ~((3UL<<14) | (3UL<<16) | (3UL<<18)) ; /* P0.7,P0.8,P0.9 cleared */
+	LPC_PINCON->PINSEL0 |=  (2UL<<14) | (2UL<<16) | (2UL<<18);    /* P0.7 SCK1,P0.8 MISO1,P0.9 MOSI1 */
 	
-	
-	/* PCLK_SSP0=CCLK */
-	LPC_SC->PCLKSEL1 &= ~(3<<10);               /* PCLKSP0 = CCLK/4 (18MHz) */
-	//LPC_SC->PCLKSEL1 |=  (0<<10);               /* PCLKSP0 = CCLK   (72MHz) */
+	/* PCLK_SSP1=CCLK */
+	LPC_SC->PCLKSEL0 &= ~(3<<20);               /* PCLKSP0 = CCLK/4 (18MHz) */
+	LPC_SC->PCLKSEL0 |=  (1<<20);               /* PCLKSP0 = CCLK   (72MHz) */
 
-	LPC_SSP0->CR0  = 0x0007;                    /* 8Bit, CPOL=0, CPHA=0         */
-	LPC_SSP0->CR1  = 0x0002;                    /* SSP0 enable, master          */
+	LPC_SSP1->CR0  = 0x0007;                    /* 8Bit, CPOL=0, CPHA=0         */
+	LPC_SSP1->CR1  = 0x0002;                    /* SSP1 enable, master          */
 
-	LPC17xx_SSP0_SetSpeed ( SPI_SPEED_500kHz );
+	LPC17xx_SPI_SetSpeed ( SPI_SPEED_500kHz );
 
 	/* wait for busy gone */
-	while( LPC_SSP0->SR & ( 1 << SSPSR_BSY ) );
+	while( LPC_SSP1->SR & ( 1 << SSPSR_BSY ) );
 
 	/* drain SPI RX FIFO */
-	while( LPC_SSP0->SR & ( 1 << SSPSR_RNE ) )
+	while( LPC_SSP1->SR & ( 1 << SSPSR_RNE ) )
 	{
-		dummy = LPC_SSP0->DR;
+		dummy = LPC_SSP1->DR;
 	}
 } 
 
 /*******************************************************************************
 * Function Name  : TP_Init
-* Description    : ADS7843¶Ë¿Ú³õÊ¼»¯
+* Description    : ADS7843ï¿½Ë¿Ú³ï¿½Ê¼ï¿½ï¿½
 * Input          : None
 * Output         : None
 * Return         : None
@@ -158,14 +108,13 @@ void TP_Init(void)
   LPC_GPIO0->FIODIR |=  (1<<6);   /* P0.6 CS is output */
   LPC_GPIO2->FIODIR |=  (0<<13);  /* P2.13 TP_INT is input */
   TP_CS(1); 
-  //ADS7843_SPI_Init();
-	XPT2046_SPI_Init();
+  ADS7843_SPI_Init();
 } 
 
 /*******************************************************************************
 * Function Name  : DelayUS
-* Description    : ÑÓÊ±1us
-* Input          : - cnt: ÑÓÊ±Öµ
+* Description    : ï¿½ï¿½Ê±1us
+* Input          : - cnt: ï¿½ï¿½Ê±Öµ
 * Output         : None
 * Return         : None
 * Attention		 : None
@@ -175,8 +124,8 @@ static void DelayUS(uint32_t cnt)
   uint32_t i;
   for(i = 0;i<cnt;i++)
   {
-     uint8_t us = 12; /* ÉèÖÃÖµÎª12£¬´óÔ¼ÑÓ1Î¢Ãë */    
-     while (us--)     /* ÑÓ1Î¢Ãë	*/
+     uint8_t us = 12; /* ï¿½ï¿½ï¿½ï¿½ÖµÎª12ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½1Î¢ï¿½ï¿½ */    
+     while (us--)     /* ï¿½ï¿½1Î¢ï¿½ï¿½	*/
      {
        ;   
      }
@@ -186,8 +135,8 @@ static void DelayUS(uint32_t cnt)
 
 /*******************************************************************************
 * Function Name  : WR_CMD
-* Description    : Ïò ADS7843Ð´Êý¾Ý
-* Input          : - cmd: ´«ÊäµÄÊý¾Ý
+* Description    : ï¿½ï¿½ ADS7843Ð´ï¿½ï¿½ï¿½ï¿½
+* Input          : - cmd: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 * Output         : None
 * Return         : None
 * Attention		 : None
@@ -196,11 +145,11 @@ static uint8_t WR_CMD (uint8_t cmd)
 { 
   uint8_t byte_r;
 
-  while (LPC_SSP0->SR & (1 << SSPSR_BSY) ); 	     /* Wait for transfer to finish */
-  LPC_SSP0->DR = cmd;
-  while (LPC_SSP0->SR & (1 << SSPSR_BSY) ); 	     /* Wait for transfer to finish */
-  while( !( LPC_SSP0->SR & ( 1 << SSPSR_RNE ) ) );	 /* Wait untill the Rx FIFO is not empty */
-  byte_r = LPC_SSP0->DR;
+  while (LPC_SSP1->SR & (1 << SSPSR_BSY) ); 	     /* Wait for transfer to finish */
+  LPC_SSP1->DR = cmd;
+  while (LPC_SSP1->SR & (1 << SSPSR_BSY) ); 	     /* Wait for transfer to finish */
+  while( !( LPC_SSP1->SR & ( 1 << SSPSR_RNE ) ) );	 /* Wait untill the Rx FIFO is not empty */
+  byte_r = LPC_SSP1->DR;
 
   return byte_r;                                     /* Return received value */
 } 
@@ -209,10 +158,10 @@ static uint8_t WR_CMD (uint8_t cmd)
 
 /*******************************************************************************
 * Function Name  : RD_AD
-* Description    : ¶ÁÈ¡ADCÖµ
+* Description    : ï¿½ï¿½È¡ADCÖµ
 * Input          : None
 * Output         : None
-* Return         : ADS7843·µ»Ø¶þ×Ö½ÚÊý¾Ý
+* Return         : ADS7843ï¿½ï¿½ï¿½Ø¶ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½
 * Attention		 : None
 *******************************************************************************/
 static int RD_AD(void)  
@@ -232,10 +181,10 @@ static int RD_AD(void)
 
 /*******************************************************************************
 * Function Name  : Read_X
-* Description    : ¶ÁÈ¡ADS7843Í¨µÀX+µÄADCÖµ 
+* Description    : ï¿½ï¿½È¡ADS7843Í¨ï¿½ï¿½X+ï¿½ï¿½ADCÖµ 
 * Input          : None
 * Output         : None
-* Return         : ADS7843·µ»ØÍ¨µÀX+µÄADCÖµ
+* Return         : ADS7843ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½X+ï¿½ï¿½ADCÖµ
 * Attention		 : None
 *******************************************************************************/
 int Read_X(void)  
@@ -252,10 +201,10 @@ int Read_X(void)
 
 /*******************************************************************************
 * Function Name  : Read_Y
-* Description    : ¶ÁÈ¡ADS7843Í¨µÀY+µÄADCÖµ
+* Description    : ï¿½ï¿½È¡ADS7843Í¨ï¿½ï¿½Y+ï¿½ï¿½ADCÖµ
 * Input          : None
 * Output         : None
-* Return         : ADS7843·µ»ØÍ¨µÀY+µÄADCÖµ
+* Return         : ADS7843ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½Y+ï¿½ï¿½ADCÖµ
 * Attention		 : None
 *******************************************************************************/
 int Read_Y(void)  
@@ -273,10 +222,10 @@ int Read_Y(void)
 
 /*******************************************************************************
 * Function Name  : TP_GetAdXY
-* Description    : ¶ÁÈ¡ADS7843 Í¨µÀX+ Í¨µÀY+µÄADCÖµ
+* Description    : ï¿½ï¿½È¡ADS7843 Í¨ï¿½ï¿½X+ Í¨ï¿½ï¿½Y+ï¿½ï¿½ADCÖµ
 * Input          : None
 * Output         : None
-* Return         : ADS7843·µ»Ø Í¨µÀX+ Í¨µÀY+µÄADCÖµ 
+* Return         : ADS7843ï¿½ï¿½ï¿½ï¿½ Í¨ï¿½ï¿½X+ Í¨ï¿½ï¿½Y+ï¿½ï¿½ADCÖµ 
 * Attention		 : None
 *******************************************************************************/
 void TP_GetAdXY(int *x,int *y)  
@@ -291,7 +240,7 @@ void TP_GetAdXY(int *x,int *y)
 
 /*******************************************************************************
 * Function Name  : TP_DrawPoint
-* Description    : ÔÚÖ¸¶¨×ù±ê»­µã
+* Description    : ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ê»­ï¿½ï¿½
 * Input          : - Xpos: Row Coordinate
 *                  - Ypos: Line Coordinate 
 * Output         : None
@@ -305,7 +254,7 @@ void TP_DrawPoint(uint16_t Xpos,uint16_t Ypos)
 
 /*******************************************************************************
 * Function Name  : DrawCross
-* Description    : ÔÚÖ¸¶¨×ù±ê»­Ê®×Ö×¼ÐÇ
+* Description    : ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ê»­Ê®ï¿½ï¿½×¼ï¿½ï¿½
 * Input          : - Xpos: Row Coordinate
 *                  - Ypos: Line Coordinate 
 * Output         : None
@@ -334,10 +283,10 @@ void DrawCross(uint16_t Xpos,uint16_t Ypos)
 
 /*******************************************************************************
 * Function Name  : Read_Ads7846
-* Description    : µÃµ½ÂË²¨Ö®ºóµÄX Y
+* Description    : ï¿½Ãµï¿½ï¿½Ë²ï¿½Ö®ï¿½ï¿½ï¿½X Y
 * Input          : None
 * Output         : None
-* Return         : Coordinate½á¹¹ÌåµØÖ·
+* Return         : Coordinateï¿½á¹¹ï¿½ï¿½ï¿½Ö·
 * Attention		 : None
 *******************************************************************************/
 Coordinate *Read_Ads7846(void)
@@ -345,32 +294,32 @@ Coordinate *Read_Ads7846(void)
   static Coordinate  screen;
   int m0,m1,m2,TP_X[1],TP_Y[1],temp[3];
   uint8_t count=0;
-  int buffer[2][9]={{0},{0}};  /* ×ø±êXºÍY½øÐÐ¶à´Î²ÉÑù */
-  do					       /* Ñ­»·²ÉÑù9´Î */
+  int buffer[2][9]={{0},{0}};  /* ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½Yï¿½ï¿½ï¿½Ð¶ï¿½Î²ï¿½ï¿½ï¿½ */
+  do					       /* Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½9ï¿½ï¿½ */
   {		   
     TP_GetAdXY(TP_X,TP_Y);  
 	buffer[0][count]=TP_X[0];  
 	buffer[1][count]=TP_Y[0];
 	count++;  
   }
-  while(!TP_INT_IN&& count<9);  /* TP_INT_INÎª´¥ÃþÆÁÖÐ¶ÏÒý½Å,µ±ÓÃ»§µã»÷´¥ÃþÆÁÊ±TP_INT_IN»á±»ÖÃµÍ */
-  if(count==9)   /* ³É¹¦²ÉÑù9´Î,½øÐÐÂË²¨ */ 
+  while(!TP_INT_IN&& count<9);  /* TP_INT_INÎªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±TP_INT_INï¿½á±»ï¿½Ãµï¿½ */
+  if(count==9)   /* ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½9ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ë²ï¿½ */ 
   {  
-    /* Îª¼õÉÙÔËËãÁ¿,·Ö±ð·Ö3×éÈ¡Æ½¾ùÖµ */
+    /* Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Ö±ï¿½ï¿½3ï¿½ï¿½È¡Æ½ï¿½ï¿½Öµ */
     temp[0]=(buffer[0][0]+buffer[0][1]+buffer[0][2])/3;
 	temp[1]=(buffer[0][3]+buffer[0][4]+buffer[0][5])/3;
 	temp[2]=(buffer[0][6]+buffer[0][7]+buffer[0][8])/3;
-	/* ¼ÆËã3×éÊý¾ÝµÄ²îÖµ */
+	/* ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½ÝµÄ²ï¿½Öµ */
 	m0=temp[0]-temp[1];
 	m1=temp[1]-temp[2];
 	m2=temp[2]-temp[0];
-	/* ¶ÔÉÏÊö²îÖµÈ¡¾ø¶ÔÖµ */
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÈ¡ï¿½ï¿½ï¿½ï¿½Öµ */
 	m0=m0>0?m0:(-m0);
     m1=m1>0?m1:(-m1);
 	m2=m2>0?m2:(-m2);
-	/* ÅÐ¶Ï¾ø¶Ô²îÖµÊÇ·ñ¶¼³¬¹ý²îÖµÃÅÏÞ£¬Èç¹ûÕâ3¸ö¾ø¶Ô²îÖµ¶¼³¬¹ýÃÅÏÞÖµ£¬ÔòÅÐ¶¨Õâ´Î²ÉÑùµãÎªÒ°µã,Å×Æú²ÉÑùµã£¬²îÖµÃÅÏÞÈ¡Îª2 */
+	/* ï¿½Ð¶Ï¾ï¿½ï¿½Ô²ï¿½Öµï¿½Ç·ñ¶¼³ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Þ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½Î²ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÒ°ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½È¡Îª2 */
 	if( m0>THRESHOLD  &&  m1>THRESHOLD  &&  m2>THRESHOLD ) return 0;
-	/* ¼ÆËãËüÃÇµÄÆ½¾ùÖµ£¬Í¬Ê±¸³Öµ¸øscreen */ 
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½Æ½ï¿½ï¿½Öµï¿½ï¿½Í¬Ê±ï¿½ï¿½Öµï¿½ï¿½screen */ 
 	if(m0<m1)
 	{
 	  if(m2<m0) 
@@ -383,7 +332,7 @@ Coordinate *Read_Ads7846(void)
 	else 
 	  screen.x=(temp[1]+temp[2])/2;
 
-	/* Í¬ÉÏ ¼ÆËãYµÄÆ½¾ùÖµ */
+	/* Í¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Yï¿½ï¿½Æ½ï¿½ï¿½Öµ */
     temp[0]=(buffer[1][0]+buffer[1][1]+buffer[1][2])/3;
 	temp[1]=(buffer[1][3]+buffer[1][4]+buffer[1][5])/3;
 	temp[2]=(buffer[1][6]+buffer[1][7]+buffer[1][8])/3;
@@ -412,16 +361,16 @@ Coordinate *Read_Ads7846(void)
   return 0; 
 }
 	 
-/* ÏÂÃæÊÇ´¥ÃþÆÁµ½Òº¾§ÆÁ×ø±ê±ä»»µÄ×ª»»º¯Êý */
-/* Ö»ÓÐÔÚLCDºÍ´¥ÃþÆÁ¼äµÄÎó²î½Ç¶È·Ç³£Ð¡Ê±,²ÅÄÜÔËÓÃÏÂÃæ¹«Ê½ */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ä»»ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+/* Ö»ï¿½ï¿½ï¿½ï¿½LCDï¿½Í´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¶È·Ç³ï¿½Ð¡Ê±,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ¹«Ê½ */
 
 
 /*******************************************************************************
 * Function Name  : setCalibrationMatrix
-* Description    : ¼ÆËã³ö K A B C D E F
+* Description    : ï¿½ï¿½ï¿½ï¿½ï¿½ K A B C D E F
 * Input          : None
 * Output         : None
-* Return         : ·µ»Ø1±íÊ¾³É¹¦ 0Ê§°Ü
+* Return         : ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½Ê¾ï¿½É¹ï¿½ 0Ê§ï¿½ï¿½
 * Attention		 : None
 *******************************************************************************/
 uint8_t setCalibrationMatrix( Coordinate * displayPtr,
@@ -439,23 +388,23 @@ uint8_t setCalibrationMatrix( Coordinate * displayPtr,
   }
   else
   {
-    /* A£½((XD0£­XD2) (Y1£­Y2)£­(XD1£­XD2) (Y0£­Y2))£¯K	*/
+    /* Aï¿½ï¿½((XD0ï¿½ï¿½XD2) (Y1ï¿½ï¿½Y2)ï¿½ï¿½(XD1ï¿½ï¿½XD2) (Y0ï¿½ï¿½Y2))ï¿½ï¿½K	*/
     matrixPtr->An = ((displayPtr[0].x - displayPtr[2].x) * (screenPtr[1].y - screenPtr[2].y)) - 
                     ((displayPtr[1].x - displayPtr[2].x) * (screenPtr[0].y - screenPtr[2].y)) ;
-	/* B£½((X0£­X2) (XD1£­XD2)£­(XD0£­XD2) (X1£­X2))£¯K	*/
+	/* Bï¿½ï¿½((X0ï¿½ï¿½X2) (XD1ï¿½ï¿½XD2)ï¿½ï¿½(XD0ï¿½ï¿½XD2) (X1ï¿½ï¿½X2))ï¿½ï¿½K	*/
     matrixPtr->Bn = ((screenPtr[0].x - screenPtr[2].x) * (displayPtr[1].x - displayPtr[2].x)) - 
                     ((displayPtr[0].x - displayPtr[2].x) * (screenPtr[1].x - screenPtr[2].x)) ;
-    /* C£½(Y0(X2XD1£­X1XD2)+Y1(X0XD2£­X2XD0)+Y2(X1XD0£­X0XD1))£¯K */
+    /* Cï¿½ï¿½(Y0(X2XD1ï¿½ï¿½X1XD2)+Y1(X0XD2ï¿½ï¿½X2XD0)+Y2(X1XD0ï¿½ï¿½X0XD1))ï¿½ï¿½K */
     matrixPtr->Cn = (screenPtr[2].x * displayPtr[1].x - screenPtr[1].x * displayPtr[2].x) * screenPtr[0].y +
                     (screenPtr[0].x * displayPtr[2].x - screenPtr[2].x * displayPtr[0].x) * screenPtr[1].y +
                     (screenPtr[1].x * displayPtr[0].x - screenPtr[0].x * displayPtr[1].x) * screenPtr[2].y ;
-    /* D£½((YD0£­YD2) (Y1£­Y2)£­(YD1£­YD2) (Y0£­Y2))£¯K	*/
+    /* Dï¿½ï¿½((YD0ï¿½ï¿½YD2) (Y1ï¿½ï¿½Y2)ï¿½ï¿½(YD1ï¿½ï¿½YD2) (Y0ï¿½ï¿½Y2))ï¿½ï¿½K	*/
     matrixPtr->Dn = ((displayPtr[0].y - displayPtr[2].y) * (screenPtr[1].y - screenPtr[2].y)) - 
                     ((displayPtr[1].y - displayPtr[2].y) * (screenPtr[0].y - screenPtr[2].y)) ;
-    /* E£½((X0£­X2) (YD1£­YD2)£­(YD0£­YD2) (X1£­X2))£¯K	*/
+    /* Eï¿½ï¿½((X0ï¿½ï¿½X2) (YD1ï¿½ï¿½YD2)ï¿½ï¿½(YD0ï¿½ï¿½YD2) (X1ï¿½ï¿½X2))ï¿½ï¿½K	*/
     matrixPtr->En = ((screenPtr[0].x - screenPtr[2].x) * (displayPtr[1].y - displayPtr[2].y)) - 
                     ((displayPtr[0].y - displayPtr[2].y) * (screenPtr[1].x - screenPtr[2].x)) ;
-    /* F£½(Y0(X2YD1£­X1YD2)+Y1(X0YD2£­X2YD0)+Y2(X1YD0£­X0YD1))£¯K */
+    /* Fï¿½ï¿½(Y0(X2YD1ï¿½ï¿½X1YD2)+Y1(X0YD2ï¿½ï¿½X2YD0)+Y2(X1YD0ï¿½ï¿½X0YD1))ï¿½ï¿½K */
     matrixPtr->Fn = (screenPtr[2].x * displayPtr[1].y - screenPtr[1].x * displayPtr[2].y) * screenPtr[0].y +
                     (screenPtr[0].x * displayPtr[2].y - screenPtr[2].x * displayPtr[0].y) * screenPtr[1].y +
                     (screenPtr[1].x * displayPtr[0].y - screenPtr[0].x * displayPtr[1].y) * screenPtr[2].y ;
@@ -465,10 +414,10 @@ uint8_t setCalibrationMatrix( Coordinate * displayPtr,
 
 /*******************************************************************************
 * Function Name  : getDisplayPoint
-* Description    : Í¨¹ý K A B C D E F °ÑÍ¨µÀX YµÄÖµ×ª»»ÎªÒº¾§ÆÁ×ø±ê
+* Description    : Í¨ï¿½ï¿½ K A B C D E F ï¿½ï¿½Í¨ï¿½ï¿½X Yï¿½ï¿½Öµ×ªï¿½ï¿½ÎªÒºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 * Input          : None
 * Output         : None
-* Return         : ·µ»Ø1±íÊ¾³É¹¦ 0Ê§°Ü
+* Return         : ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½Ê¾ï¿½É¹ï¿½ 0Ê§ï¿½ï¿½
 * Attention		 : None
 *******************************************************************************/
 uint8_t getDisplayPoint(Coordinate * displayPtr,
@@ -499,7 +448,7 @@ uint8_t getDisplayPoint(Coordinate * displayPtr,
 
 /*******************************************************************************
 * Function Name  : TouchPanel_Calibrate
-* Description    : Ð£×¼´¥ÃþÆÁ
+* Description    : Ð£×¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 * Input          : None
 * Output         : None
 * Return         : None
@@ -523,7 +472,7 @@ void TouchPanel_Calibrate(void)
    while( Ptr == (void*)0 );
    ScreenSample[i].x = Ptr->x; ScreenSample[i].y = Ptr->y;
   }
-  setCalibrationMatrix( &DisplaySample[0],&ScreenSample[0],&matrix ) ;  /* ËÍÈëÖµµÃµ½²ÎÊý */	   
+  setCalibrationMatrix( &DisplaySample[0],&ScreenSample[0],&matrix ) ;  /* ï¿½ï¿½ï¿½ï¿½Öµï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ */	   
   LCD_Clear(Black);
 } 
 

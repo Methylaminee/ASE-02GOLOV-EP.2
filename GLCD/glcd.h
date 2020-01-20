@@ -28,7 +28,6 @@
 /* Private define ------------------------------------------------------------*/
 
 /* LCD Interface */
-#define PIN_RESET	(1 << 7)
 #define PIN_EN		(1 << 19)
 #define PIN_LE		(1 << 20)
 #define PIN_DIR		(1 << 21)
@@ -37,7 +36,6 @@
 #define PIN_WR		(1 << 24)
 #define PIN_RD		(1 << 25)   
 
-#define LCD_RESET(x)	((x) ? (LPC_GPIO0->FIOSET = PIN_RESET) : (LPC_GPIO0->FIOCLR = PIN_RESET));
 #define LCD_EN(x)   ((x) ? (LPC_GPIO0->FIOSET = PIN_EN) : (LPC_GPIO0->FIOCLR = PIN_EN));
 #define LCD_LE(x)   ((x) ? (LPC_GPIO0->FIOSET = PIN_LE) : (LPC_GPIO0->FIOCLR = PIN_LE));
 #define LCD_DIR(x)  ((x) ? (LPC_GPIO0->FIOSET = PIN_DIR) : (LPC_GPIO0->FIOCLR = PIN_DIR));
