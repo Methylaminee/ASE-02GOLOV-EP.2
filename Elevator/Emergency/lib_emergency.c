@@ -25,6 +25,7 @@ extern const unsigned int EMERGENCY_TIMER;
 extern const unsigned int POSITION_TIMER;
 extern const unsigned int LOUDSPEAKER_MCR;
 extern const unsigned int EMERGENCY_MCR;
+extern const unsigned int DEFAULT_MCR_BASE;
 extern const unsigned int DEFAULT_MCR;
 extern const unsigned int TOUCH_TIMER;
 extern const unsigned int IDLE_TIMER;
@@ -32,6 +33,7 @@ extern const unsigned int IDLE_MCR;
 
 extern unsigned int requestedFloor;
 extern unsigned int isElevatorMovingUpstairs;
+extern unsigned int isOnMaintenance;
 
 unsigned int isEmergency = 0;
 unsigned int isRescuing = 0;
@@ -60,8 +62,14 @@ void handleEmergency(unsigned int isEnabled) {
 		LED_Off(LED_CONTROLLER_STATUS);
 		timer_set_mcr(EMERGENCY_TIMER, DEFAULT_MCR);
 		timer_reset(EMERGENCY_TIMER);
-		timer_set_mcr(IDLE_TIMER, IDLE_MCR);
-		timer_reset(IDLE_TIMER);
+		if (isOnMaintenance) {
+			timer_set_mcr(TOUCH_TIMER, DEFAULT_MCR_BASE);
+			timer_reset(TOUCH_TIMER);
+			timer_enable(TOUCH_TIMER);
+		} else {
+			timer_set_mcr(IDLE_TIMER, IDLE_MCR);
+			timer_reset(IDLE_TIMER);
+		}
 	}
 	
 	
@@ -88,27 +96,3 @@ void doRescue(unsigned int floor) {
 		isElevatorMovingUpstairs &= floor;
 	}
 }
-
-/*
-requestedFloor = floor;
-	if (isElevatorFree) {
-		isElevatorFree = 0;
-		isDestinationReached = 0;
-		goToHome();
-		LED_Out(0x0);
-		if (requestedFloor == 1) {
-			isElevatorMovingUpstairs = 1;
-			LED_On(LED_RESERVED_FLOOR_1);
-		} else {
-			isElevatorMovingUpstairs = 0;
-			LED_On(LED_RESERVED_FLOOR_0);
-		}
-		if (elevatorFloor != requestedFloor) {
-			timer_enable(MOVING_TIMER);
-			timer_enable(POSITION_TIMER);
-			isElevatorBetweenFloors = 1;
-			isElevatorMoving = 1;
-		}
-	}
-	return 0;
-*/

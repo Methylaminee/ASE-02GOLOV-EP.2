@@ -103,10 +103,6 @@ void stopElevator() {
 	}
 }
 
-unsigned int isElevatorArrived() {
-	return requestedFloor == elevatorFloor;
-}
-
 unsigned int isAlarmDetectedFloorOne() {
 	return requestedFloor && !isElevatorFree && LED_isOn(LED_ALARM_FLOOR_1);
 }

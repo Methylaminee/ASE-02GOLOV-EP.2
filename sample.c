@@ -37,7 +37,7 @@ int main (void) {
 	
 	LCD_Initialization();									/* LCD Initialization									*/
 	TP_Init();														/* TouchPanel Initialization					*/
-	//TouchPanel_Calibrate();								/* TouchPanel Calibration							*/
+	TouchPanel_Calibrate();								/* TouchPanel Calibration							*/
 	
 	goToHome();														/* Shows Maintenance Homepage					*/
 	LED_Out(0x0);

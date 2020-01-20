@@ -10,9 +10,13 @@
 
 #include "stdint.h"
 
+typedef struct loudspeaker_note {
+	int frequency;
+	uint8_t description[10];
+} note;
+
 void goToHome(void);
 void goToSetup(void);
 void selectNote(unsigned int isNoteA);
-void updateNote(unsigned int isNoteA, int noteValue);
-void saveNote(unsigned int isNoteA);
-uint8_t* formatIntToString(uint16_t number);
+void updateNote(void);
+void saveNote(void);

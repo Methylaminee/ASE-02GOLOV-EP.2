@@ -71,8 +71,9 @@ void RIT_IRQHandler (void) {
 	}
 	
 	/* buttons management */
+	/* EMERGENCY - INT0 pressed */
 	if (emergencyHappened!=0) {
-		if ((LPC_GPIO2->FIOPIN & (1<<10)) == 0/*&& isElevatorBetweenFloors*/) {	/* EMERGENCY - INT0 pressed */
+		if ((LPC_GPIO2->FIOPIN & (1<<10)) == 0 && (isElevatorBetweenFloors || isOnMaintenance)) {
 			if (emergencyHappened == 1) {
 				emergencyHappened++;				
 				if (!isEmergency) {
@@ -91,8 +92,9 @@ void RIT_IRQHandler (void) {
 			LPC_PINCON->PINSEL4    |= (1 << 20);     /* External interrupt 0 pin selection */
 		}
 	}
+	/* FLOOR.1 - KEY1 pressed */
 	if (reservedOne!=0) { 
-		if((LPC_GPIO2->FIOPIN & (1<<11)) == 0 && isElevatorFree && !isOnMaintenance) {	/* FLOOR.1 - KEY1 pressed */
+		if((LPC_GPIO2->FIOPIN & (1<<11)) == 0 && isElevatorFree && !isOnMaintenance) {	
 			reservedOne++;
 			if (!isEmergency) {
 				reserveElevator(1);
@@ -105,8 +107,9 @@ void RIT_IRQHandler (void) {
 			LPC_PINCON->PINSEL4    |= (1 << 22);     /* External interrupt 0 pin selection */
 		}
 	}
+	/* FLOOR.0 - KEY2 pressed */
 	if (reservedZero!=0) {
-		if ((LPC_GPIO2->FIOPIN & (1<<12)) == 0 && isElevatorFree && !isOnMaintenance) {	/* FLOOR.0 - KEY2 pressed */
+		if ((LPC_GPIO2->FIOPIN & (1<<12)) == 0 && isElevatorFree && !isOnMaintenance) {	
 			reservedZero++;
 			if (!isEmergency) {
 				reserveElevator(0);
@@ -119,9 +122,9 @@ void RIT_IRQHandler (void) {
 			LPC_PINCON->PINSEL4    |= (1 << 24);     /* External interrupt 1 pin selection */
 		}
 	}
-	
-	ADC_start_conversion();
-	
+	if (isOnMaintenance) {
+		ADC_start_conversion();
+	}
   LPC_RIT->RICTRL |= 0x1;	/* clear interrupt flag */
 	
   return;

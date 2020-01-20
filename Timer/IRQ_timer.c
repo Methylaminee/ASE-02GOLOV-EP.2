@@ -22,10 +22,15 @@ extern const unsigned int LED_RESERVED_FLOOR_0;
 extern const unsigned int LED_RESERVED_FLOOR_1;
 extern const unsigned int LED_CONTROLLER_STATUS;
 
+extern const unsigned int SIN_POINTS;
+extern const unsigned int DEFAULT_SCREEN_BG;
+
 extern const unsigned int IDLE_TIMER;
 extern const unsigned int MOVING_TIMER;
 extern const unsigned int EMERGENCY_TIMER;
 extern const unsigned int LOUDSPEAKER_TIMER;
+extern const unsigned int POSITION_TIMER;
+extern const unsigned int POSITION_TIMER_MAX_VALUE;
 extern const unsigned int FLOOR_REACHED_TIMER;
 extern const unsigned int FLOOR_REACHED_TIMER_MAX_VALUE;
 extern const unsigned int FLOOR_REACHED_MCR;
@@ -44,25 +49,19 @@ extern unsigned int isDestinationReached;
 extern unsigned int isJoystickEnabled;
 extern unsigned int isEmergency;
 extern unsigned int isRescuing;
+extern unsigned int isOnMaintenance;
 
 extern unsigned int isHomePage;
 extern unsigned int isNoteASelected;
 
-extern int count;
 unsigned int ticks=0;
 uint8_t x = 20;
-extern uint8_t *note_one_value;
-extern uint8_t *note_two_value;
+extern note octave[];
+extern uint16_t SinTable[];
+extern int note_one_idx;
+extern int note_two_idx;
 unsigned int isTouching = 0;
 
-uint16_t SinTable[45] =                                      
-{
-    410, 467, 523, 576, 627, 673, 714, 749, 778,
-    799, 813, 819, 817, 807, 789, 764, 732, 694, 
-    650, 602, 550, 495, 438, 381, 324, 270, 217,
-    169, 125, 87 , 55 , 30 , 12 , 2  , 0  , 6  ,   
-    20 , 41 , 70 , 105, 146, 193, 243, 297, 353
-};
 
 /* TIMER0 - 2Hz(0.5s)        */
 void TIMER0_IRQHandler(void) {
@@ -105,11 +104,12 @@ void TIMER1_IRQHandler(void) {
 	} else {
 		if (isEmergency) {
 			if (LED_isOn(LED_CONTROLLER_STATUS)){
+				timer_set_loudspeaker_freq(octave[note_one_idx].frequency);
 				LED_Off(LED_CONTROLLER_STATUS);
 			} else {
+				timer_set_loudspeaker_freq(octave[note_two_idx].frequency);
 				LED_On(LED_CONTROLLER_STATUS);
 			}
-			timer_set_loudspeaker_freq(count);
 			timer_reset(LOUDSPEAKER_TIMER);
 			timer_enable(LOUDSPEAKER_TIMER);
 		}
@@ -118,61 +118,72 @@ void TIMER1_IRQHandler(void) {
   return;
 }
 
-/* TIMER2 - 1388mHz(7.2s)    */
+/* TIMER2 - 1388mHz(7.2s) + (1s)   */
 void TIMER2_IRQHandler(void) {
-	timer_disable(MOVING_TIMER);
-	timer_reset(MOVING_TIMER);
-	if (isElevatorMovingUpstairs) {
-		elevatorFloor = 1;
+	if (!isElevatorFree) {
+		timer_disable(MOVING_TIMER);
+		timer_reset(MOVING_TIMER);
+		if (isElevatorMovingUpstairs) {
+			elevatorFloor = 1;
+		} else {
+			elevatorFloor = 0;
+		}
+		if (isJoystickEnabled) {
+			//isElevatorFree = 1;
+			elevatorPosition = 0;
+			isDestinationReached = 1;
+		}
+		if (isEmergency) {
+			isEmergency = !isEmergency;
+			isRescuing = 0;
+		}
+		isElevatorMoving = 0;
+		isElevatorBetweenFloors = 0;
+		timer_set_mcr(FLOOR_REACHED_TIMER, FLOOR_REACHED_MCR);
+		timer_set_mcr(IDLE_TIMER, IDLE_MCR);
+		timer_enable(FLOOR_REACHED_TIMER);
+		timer_enable(IDLE_TIMER);
 	} else {
-		elevatorFloor = 0;
+		if (isNoteASelected) {
+			GUI_Text(70, 35, (uint8_t *) "NOTE 1 SAVED", DEFAULT_SCREEN_BG, DEFAULT_SCREEN_BG); 
+		} else {
+			GUI_Text(70, 35, (uint8_t *) "NOTE 2 SAVED", DEFAULT_SCREEN_BG, DEFAULT_SCREEN_BG);
+		}
+		timer_disable(POSITION_TIMER);
+		timer_reset(POSITION_TIMER);
+		LPC_TIM2->MR0 = POSITION_TIMER_MAX_VALUE;
 	}
-	if (isJoystickEnabled) {
-		//isElevatorFree = 1;
-		elevatorPosition = 0;
-		isDestinationReached = 1;
-	}
-	if (isEmergency) {
-		isEmergency = !isEmergency;
-		isRescuing = 0;
-	}
-	isElevatorMoving = 0;
-	isElevatorBetweenFloors = 0;
-	timer_set_mcr(FLOOR_REACHED_TIMER, FLOOR_REACHED_MCR);
-	timer_set_mcr(IDLE_TIMER, IDLE_MCR);
-	timer_enable(FLOOR_REACHED_TIMER);
-	timer_enable(IDLE_TIMER);
   LPC_TIM2->IR = 1;			/* clear interrupt flag */
   return;
 }
 
 /* TIMER3 - 166mHz(60s)      */
 void TIMER3_IRQHandler(void) {
+	/*	TOUCHSCREEN	*/
 	if (LPC_TIM3->IR & (1<<0)) {
 		if (isElevatorFree) {
 			Coordinate * Ptr = Read_Ads7846();
 			if (Ptr != (void*)0) {
-				//i'm touching
+				// i'm touching
 				getDisplayPoint(&display, Ptr, &matrix );
 				if(display.x <= 240 && display.x > 0 && !isTouching){
 					if (isHomePage) {
-						//power btn
+						// Power Btn
 						if (display.x > 160 && display.x < 220 && display.y > 20 && display.y < 80) {
 							goToSetup();
 						}
 					} else {
-						updateNote(isNoteASelected, count);
-						//select note 1/2
+						// Select Note 1/2
 						if (display.x > 20 && display.x < 220 && display.y > 60 && display.y < 145) {
 							selectNote(1);
 						} else if (display.x > 20 && display.x < 220 && display.y > 175 && display.y < 260) {
 							selectNote(0);
 						} else
-						//save
+						// Save
 						if (display.x > 10 && display.x < 100 && display.y > 275) {
-							saveNote(count);
+							saveNote();
 						} else 
-						//quit
+						// Quit
 						if (display.x > 140 && display.x < 230 && display.y > 275) {
 							goToHome();
 							LED_Out(0x0);
@@ -180,14 +191,21 @@ void TIMER3_IRQHandler(void) {
 					}
 					isTouching++;
 				}
-				DAC_convert (count);
 			} else {
 				//do nothing if touch returns values out of bounds
 				isTouching=0;
 			}
+			if (!isHomePage) {
+				/*	Ho tentato di agganciare l'aggiornamento del testo della nota selezionata 
+						solo al variare dell'indice relativo al valore del potenziometro con esiti 
+						negativi. I LED rimanevano comunque accesi perchè veniva "sentito" un minimo 
+						cambiamento nel valore campionato > i LED rimangono accesi 								*/
+				updateNote();
+			}
 		}
 		LPC_TIM3->IR = 1<<0;			/* clear interrupt flag */
 	} 
+	/*	IDLE	*/
 	if (LPC_TIM3->IR & (1<<1)) {
 		if (isElevatorBetweenFloors){
 			handleEmergency(1);
@@ -204,13 +222,15 @@ void TIMER3_IRQHandler(void) {
 		}
 		LPC_TIM3->IR = 1<<1;
 	}
+	/*	LOUDSPEAKER EMERGENCY	*/
 	if (LPC_TIM3->IR & (1<<2)) {
 		if (isEmergency) {
 			static int ticks=0;
 			/* DAC management */	
-			DAC_convert (SinTable[ticks]<<6);
+			int sinTick = (SinTable[ticks]*0.3);
+			DAC_convert (sinTick<<6);
 			ticks++;
-			if(ticks==45) ticks=0;
+			if(ticks==SIN_POINTS) ticks=0;
 		}
 		LPC_TIM3->IR = 1<<2;
 	}

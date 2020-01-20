@@ -20,13 +20,14 @@ extern void timer_enable( uint8_t timer_num );
 extern void timer_disable( uint8_t timer_num );
 extern void timer_reset( uint8_t timer_num );
 extern void timer_set_loudspeaker_freq( uint32_t timerInterval );
-extern void timer_set_mr( uint8_t timer_num, uint32_t register_num, uint32_t timerInterval );
 extern void timer_set_mcr( uint8_t timer_num, uint32_t setupValue );
 extern void timer_set_tc( uint8_t timer_num, uint32_t timerInterval );
 extern uint32_t timer_get_tc( uint8_t timer_num );
 /* IRQ_timer.c */
 extern void TIMER0_IRQHandler (void);
 extern void TIMER1_IRQHandler (void);
+extern void TIMER2_IRQHandler(void);
+extern void TIMER3_IRQHandler(void);
 
 #endif /* end __TIMER_H */
 /*****************************************************************************

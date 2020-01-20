@@ -13,6 +13,7 @@
 const unsigned int MOVING_TIMER = 0;
 const unsigned int FLOOR_REACHED_TIMER = 0;
 const unsigned int EMERGENCY_TIMER = 1;
+const unsigned int REFRESH_TIMER = 2;
 const unsigned int POSITION_TIMER = 2;
 const unsigned int IDLE_TIMER = 3;
 const unsigned int TOUCH_TIMER = 3;
@@ -21,6 +22,7 @@ const unsigned int LOUDSPEAKER_TIMER = 3;
 const unsigned int IDLE_TIMER_MAX_VALUE = 0x59682F00;
 const unsigned int TOUCH_TIMER_MAX_VALUE = 0x000004E2;
 const unsigned int MOVING_TIMER_MAX_VALUE = 0x00BEBC20;
+const unsigned int REFRESH_TIMER_MAX_VALUE = 0x017D7840;
 const unsigned int POSITION_TIMER_MAX_VALUE = 0x0ABA9500;
 const unsigned int EMERGENCY_TIMER_MAX_VALUE = 0x005F5E10;
 const unsigned int FLOOR_REACHED_TIMER_MAX_VALUE = 0x047868C0;
@@ -36,9 +38,9 @@ const unsigned int FLOOR_REACHED_MCR = 0x1C8;
 void TIMER_init(void) {
 	
 	timer_init(0, 0x00BEBC20, 0x004C4B40, 0x047868C0, 0x0ABA9500, DEFAULT_MCR_BASE);	/* TIMER0 Initialization - MR0 	2Hz(0.5s) 		- MR1/MR2 	5Hz(0.2s for 3s) 	*/
-	timer_init(1, 0x02FAF080, 0x005F5E10, 0, 0, DEFAULT_MCR);								/* TIMER2 Initialization - MR0 	(2s)      		-	MR1 			4Hz(0.25s)      	*/
-	timer_init(2, 0x0ABA9500, 0, 0, 0, DEFAULT_MCR);												/* TIMER1 Initialization - MR0  1388mHz(7.2s)         											*/
-	timer_init(3, 0x4E2, 0x59682F00, 0, 0, DEFAULT_MCR_BASE);								/* TIMER3 Initialization - MR0 	20kHz(50us) 	- MR1     	166mHz(60s)				*/
+	timer_init(1, 0x02FAF080, 0x005F5E10, 0, 0, DEFAULT_MCR);													/* TIMER2 Initialization - MR0 	(2s)      		-	MR1 			4Hz(0.25s)      	*/
+	timer_init(2, 0x0ABA9500, 0, 0, 0, DEFAULT_MCR);																	/* TIMER1 Initialization - MR0  1388mHz(7.2s)         											*/
+	timer_init(3, 0x4E2, 0x59682F00, 0, 0, DEFAULT_MCR_BASE);													/* TIMER3 Initialization - MR0 	20kHz(50us) 	- MR1     	166mHz(60s)				*/
 	timer_enable(TOUCH_TIMER);
 }			
 

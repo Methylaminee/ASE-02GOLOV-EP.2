@@ -9,7 +9,6 @@
 *********************************************************************************************************/
 
 unsigned int reserveElevator(unsigned int floor);
-unsigned int isElevatorArrived(void);
 unsigned int moveElevator(unsigned int toFloor, unsigned int previousPosition);
 void stopElevator(void);
 unsigned int isAlarmDetectedFloorOne(void);

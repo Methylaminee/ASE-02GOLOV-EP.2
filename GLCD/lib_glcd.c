@@ -283,7 +283,7 @@ static void LCD_SetCursor(uint16_t Xpos,uint16_t Ypos)
 * Return         : None
 * Attention		 : None
 *******************************************************************************/
-static void delay_ms(uint16_t ms)    
+void delay_ms(uint16_t ms)    
 { 
 	uint16_t i,j; 
 	for( i = 0; i < ms; i++ )
@@ -591,49 +591,6 @@ void LCD_DrawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t
         LCD_SetPoint(x0,y0,color);
 	}
 } 
-
-/******************************************************************************
-* Function Name  : LCD_DrawCircle
-* Description    : Bresenham's line algorithm
-* Input          : - x1: A点行座标
-*                  - y1: A点列座标 
-*				   - x2: B点行座标
-*				   - y2: B点列座标 
-*				   - color: 线颜色
-* Output         : None
-* Return         : None
-* Attention		 : None
-*******************************************************************************/	 
-void LCD_DrawCircle( uint16_t xC, uint16_t yC, uint16_t radius, uint16_t color , uint16_t bkColor ) {
-	
-	uint16_t x, y;
-	uint16_t d;
-	x = 0;
-	y = radius;
-	d = 3 - 2*radius;
-	displayCircle(xC, yC, x, y, color);
-	while (y >= x) {
-		x++;
-		if (d > 0) {
-			d = d + 4 * (x - y) + 10;
-			y--;
-		} else {
-			d = d + (4 * x) + 6;
-		}
-		displayCircle(xC, yC, x, y, color);
-	}
-}
-
-void displayCircle(uint16_t xC, uint16_t yC, uint16_t x, uint16_t y, uint16_t color) {
-	LCD_SetPoint(xC+x,yC+y, color);
-	LCD_SetPoint(xC-x,yC+y, color);
-	LCD_SetPoint(xC+x,yC-y, color);
-	LCD_SetPoint(xC-x,yC-y, color);
-	LCD_SetPoint(xC+y,yC+x, color);
-	LCD_SetPoint(xC-y,yC+x, color);
-	LCD_SetPoint(xC+y,yC-x, color);
-	LCD_SetPoint(xC-y,yC-x, color);
-}
 
 /******************************************************************************
 * Function Name  : LCD_DrawRectangle

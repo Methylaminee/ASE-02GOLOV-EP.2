@@ -94,8 +94,6 @@ void LCD_Clear(uint16_t Color);
 uint16_t LCD_GetPoint(uint16_t Xpos,uint16_t Ypos);
 void LCD_SetPoint(uint16_t Xpos,uint16_t Ypos,uint16_t point);
 void LCD_DrawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t color );
-void LCD_DrawCircle( uint16_t xC, uint16_t yC, uint16_t radius, uint16_t color , uint16_t bkColor );
-void displayCircle(uint16_t xC, uint16_t yC, uint16_t x, uint16_t y, uint16_t color);
 void LCD_DrawRectangle(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height, uint16_t color, uint16_t isFilled);
 void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, uint16_t bkColor );
 void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);

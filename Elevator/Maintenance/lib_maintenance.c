@@ -13,36 +13,60 @@
 #include "../../led/led.h"
 #include "../../GLCD/glcd.h"
 #include "../../timer/timer.h"
+#include "../../adc/adc.h"
 
+const unsigned int SIN_POINTS = 0x2D; //45
 const unsigned int DEFAULT_SCREEN_BG = 0xB4DA;
+
+/* k=1/f'*f/n  k=f/(f'*n) k=25MHz/(f'*45) */
+note octave[8] = {
+	{2120, "262Hz - C4"},
+	{1890, "294Hz - D4"},
+	{1684, "330Hz - E4"},
+	{1592, "349Hz - F4"},
+	{1417, "392Hz - G4"},
+	{1263, "440Hz - A4"},
+	{1125, "494Hz - B4"},
+	{1062, "523Hz - C5"}
+};
+
+uint16_t SinTable[SIN_POINTS] =                                      
+{
+    410, 467, 523, 576, 627, 673, 714, 749, 778,
+    799, 813, 819, 817, 807, 789, 764, 732, 694, 
+    650, 602, 550, 495, 438, 381, 324, 270, 217,
+    169, 125, 87 , 55 , 30 , 12 , 2  , 0  , 6  ,   
+    20 , 41 , 70 , 105, 146, 193, 243, 297, 353
+};
 
 extern unsigned int isElevatorFree;
 extern unsigned int isOnMaintenance;
 extern const unsigned int TOUCH_TIMER;
+extern const unsigned int REFRESH_TIMER;
+extern const unsigned int REFRESH_TIMER_MAX_VALUE;
 
-uint8_t *note_one_value;
-uint8_t *note_two_value;
+extern int IDX_count;
+
+int note_one_idx = 5;
+int note_two_idx = 5;
 unsigned int isHomePage = 1;
 unsigned int isNoteASelected = 1;
 
 void goToHome() {
-	LCD_Clear(Black);
-	LCD_DrawLine(160, 20, 220, 20, White);
-	LCD_DrawLine(160, 80, 220, 80, White);
-	LCD_DrawLine(160, 20, 160, 80, White);
-	LCD_DrawLine(220, 20, 220, 80, White);
-	
-	LCD_DrawLine(180, 40, 185, 40, White);
-	LCD_DrawLine(195, 40, 200, 40, White);
-	LCD_DrawLine(180, 60, 200, 60, White);
-	LCD_DrawLine(180, 40, 180, 60, White);
-	LCD_DrawLine(200, 40, 200, 60, White);
-	
-	LCD_DrawLine(190, 35, 190, 45, White);
-	//LCD_DrawCircle(190, 50, 40, White, Black);
-	//LCD_DrawCircle(190, 50, 25, White, Black);
-	//LCD_DrawBitmap(120, 160, 48, 48, POWER_IMAGE_PIXEL_DATA, POWER_IMAGE_BYTES_PER_PIXEL);
 	if (isElevatorFree) {
+		LCD_Clear(Black);
+		LCD_DrawLine(160, 20, 220, 20, White);
+		LCD_DrawLine(160, 80, 220, 80, White);
+		LCD_DrawLine(160, 20, 160, 80, White);
+		LCD_DrawLine(220, 20, 220, 80, White);
+		
+		LCD_DrawLine(180, 40, 185, 40, White);
+		LCD_DrawLine(195, 40, 200, 40, White);
+		LCD_DrawLine(180, 60, 200, 60, White);
+		LCD_DrawLine(180, 40, 180, 60, White);
+		LCD_DrawLine(200, 40, 200, 60, White);
+		
+		LCD_DrawLine(190, 35, 190, 45, White);
 		GUI_Text(0, 285, (uint8_t *) " touch power", Black, White);
 	} else {
 		GUI_Text(0, 285, (uint8_t *) " free elevator", Black, White);
@@ -76,9 +100,9 @@ void selectNote(unsigned int isNoteA) {
 		LCD_DrawRectangle(30, 190, 180, 20, DEFAULT_SCREEN_BG, 1);
 		LCD_DrawRectangle(30, 215, 180, 30, DEFAULT_SCREEN_BG, 1);
 		GUI_Text(66, 85, (uint8_t *) "SELECT NOTE 1", DEFAULT_SCREEN_BG, White);
-		GUI_Text(80, 110,  note_one_value, DEFAULT_SCREEN_BG, White);
+		GUI_Text(80, 110, octave[IDX_count].description, DEFAULT_SCREEN_BG, White);
 		GUI_Text(66, 195, (uint8_t *) "SELECT NOTE 2", White, DEFAULT_SCREEN_BG);
-		GUI_Text(80, 220, (uint8_t *) "523 Hz - C", White, DEFAULT_SCREEN_BG);
+		GUI_Text(80, 220, octave[note_two_idx].description, White, DEFAULT_SCREEN_BG);
 		isNoteASelected = 1;
 	} else {
 		LCD_DrawRectangle(30, 80, 180, 20, DEFAULT_SCREEN_BG, 1);
@@ -86,26 +110,32 @@ void selectNote(unsigned int isNoteA) {
 		LCD_DrawRectangle(30, 190, 180, 20, White, 1);
 		LCD_DrawRectangle(30, 215, 180, 30, White, 1);
 		GUI_Text(66, 85, (uint8_t *) "SELECT NOTE 1", White, DEFAULT_SCREEN_BG);
-		GUI_Text(80, 110, note_one_value, White, DEFAULT_SCREEN_BG);
+		GUI_Text(80, 110, octave[note_one_idx].description, White, DEFAULT_SCREEN_BG);
 		GUI_Text(66, 195, (uint8_t *) "SELECT NOTE 2", DEFAULT_SCREEN_BG, White);
-		GUI_Text(80, 220, (uint8_t *) "523 Hz - C", DEFAULT_SCREEN_BG, White);
+		GUI_Text(80, 220, octave[IDX_count].description, DEFAULT_SCREEN_BG, White);
 		isNoteASelected = 0;
 	}
 	LED_Out(0x0);
 }
 
-void updateNote(unsigned int isNoteA, int noteValue) {
-	if (isNoteA) {
-		GUI_Text(80, 110, (uint8_t *)&noteValue, DEFAULT_SCREEN_BG, White);  
+void updateNote() {
+	if (isNoteASelected) {
+		GUI_Text(80, 110, octave[IDX_count].description, DEFAULT_SCREEN_BG, White); 
 	} else {
-		GUI_Text(80, 220, (uint8_t *)&noteValue, DEFAULT_SCREEN_BG, White);
+		GUI_Text(80, 220, octave[IDX_count].description, DEFAULT_SCREEN_BG, White);
 	}
+	LED_Out(0x0);
 }
 
-void saveNote(unsigned int noteValue) {
+void saveNote() {
 	if (isNoteASelected) {
-		//note_one_value = noteValue;
+		GUI_Text(70, 35, (uint8_t *) "NOTE 1 SAVED", DEFAULT_SCREEN_BG, Green);
+		note_one_idx = IDX_count;
 	} else {
-		//note_two_value = noteValue;
+		GUI_Text(70, 35, (uint8_t *) "NOTE 2 SAVED", DEFAULT_SCREEN_BG, Green);
+		note_two_idx = IDX_count;
 	}
+	LPC_TIM2->MR0 = REFRESH_TIMER_MAX_VALUE;
+	timer_enable(REFRESH_TIMER);
+	LED_Out(0x0);
 }
