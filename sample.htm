@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\sample.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\sample.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon Jan 20 22:57:50 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon Jan 20 23:10:58 2020
 <BR><P>
 <H3>Maximum Stack Usage =        192 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -192,8 +192,8 @@ Global Symbols
 <P><STRONG><a name="[c3]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[39]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 144 + Unknown Stack Size
-<LI>Call Chain = __rt_entry_main &rArr; main &rArr; goToHome &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
+<BR><BR>[Stack]<UL><LI>Max Depth = 184 + Unknown Stack Size
+<LI>Call Chain = __rt_entry_main &rArr; main &rArr; TouchPanel_Calibrate &rArr; Read_Ads7846 &rArr; TP_GetAdXY &rArr; Read_Y &rArr; RD_AD &rArr; DelayUS
 </UL>
 <BR>[Calls]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
@@ -367,63 +367,77 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[36]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[3a]"></a>main</STRONG> (Thumb, 88 bytes, Stack size 0 bytes, sample.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = main &rArr; goToHome &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
+<P><STRONG><a name="[3a]"></a>main</STRONG> (Thumb, 96 bytes, Stack size 0 bytes, sample.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 184<LI>Call Chain = main &rArr; TouchPanel_Calibrate &rArr; Read_Ads7846 &rArr; TP_GetAdXY &rArr; Read_Y &rArr; RD_AD &rArr; DelayUS
 </UL>
-<BR>[Calls]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToHome
-<LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER_init
+<BR>[Calls]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToHome
+<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TouchPanel_Calibrate
+<LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TP_Init
+<LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER_init
 <LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemInit
-<LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_init
+<LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_init
 <LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_init
-<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
+<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
 <LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Initialization
-<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;JOYSTICK_init
-<LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DAC_init
-<LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_init
-<LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC_init
+<LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;JOYSTICK_init
+<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DAC_init
+<LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_init
+<LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC_init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[4b]"></a>LED_On</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, funct_led.o(.text))
+<P><STRONG><a name="[4d]"></a>LED_On</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, funct_led.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER1_IRQHandler
 <LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER0_IRQHandler
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopElevator
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reserveElevator
-<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doRescue
-<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
+<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopElevator
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reserveElevator
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doRescue
+<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
 </UL>
 
-<P><STRONG><a name="[4c]"></a>LED_Off</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, funct_led.o(.text))
+<P><STRONG><a name="[4e]"></a>LED_Off</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, funct_led.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
 <LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER1_IRQHandler
 <LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER0_IRQHandler
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
-<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
-<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
+<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
+<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
 </UL>
 
-<P><STRONG><a name="[5b]"></a>LED_isOn</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, funct_led.o(.text))
+<P><STRONG><a name="[5d]"></a>LED_isOn</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, funct_led.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isAlarmDetectedFloorOne
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isAlarmDetectedFloorZero
 <LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER1_IRQHandler
 <LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER0_IRQHandler
 </UL>
 
-<P><STRONG><a name="[44]"></a>LED_Out</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, funct_led.o(.text))
+<P><STRONG><a name="[46]"></a>LED_Out</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, funct_led.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = LED_Out
 </UL>
-<BR>[Calls]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
-<LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
+<BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
+<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
 </UL>
-<BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateNote
-<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;selectNote
-<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;saveNote
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToSetup
+<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateNote
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;selectNote
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;saveNote
+<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToSetup
 <LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reserveElevator
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reserveElevator
 <LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[4c]"></a>DAC_init</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, lib_dac.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[6a]"></a>DAC_convert</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, lib_dac.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
+</UL>
+
+<P><STRONG><a name="[40]"></a>SystemInit</STRONG> (Thumb, 526 bytes, Stack size 0 bytes, system_lpc17xx.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[41]"></a>LED_init</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, lib_led.o(.text))
@@ -432,91 +446,79 @@ Global Symbols
 
 <P><STRONG><a name="[c6]"></a>LED_deinit</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, lib_led.o(.text), UNUSED)
 
-<P><STRONG><a name="[40]"></a>SystemInit</STRONG> (Thumb, 526 bytes, Stack size 0 bytes, system_lpc17xx.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
 <P><STRONG><a name="[1f]"></a>EINT0_IRQHandler</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, irq_button.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = EINT0_IRQHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_DisableIRQ
+<BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_DisableIRQ
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
 <P><STRONG><a name="[20]"></a>EINT1_IRQHandler</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, irq_button.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = EINT1_IRQHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_DisableIRQ
+<BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_DisableIRQ
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
 <P><STRONG><a name="[21]"></a>EINT2_IRQHandler</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, irq_button.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = EINT2_IRQHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_DisableIRQ
+<BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_DisableIRQ
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
-<P><STRONG><a name="[45]"></a>BUTTON_init</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, lib_button.o(.text))
+<P><STRONG><a name="[47]"></a>BUTTON_init</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, lib_button.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = BUTTON_init &rArr; NVIC_SetPriority
 </UL>
-<BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_EnableIRQ
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_SetPriority
+<BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_EnableIRQ
+<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_SetPriority
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[46]"></a>JOYSTICK_init</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, lib_joystick.o(.text))
+<P><STRONG><a name="[48]"></a>JOYSTICK_init</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, lib_joystick.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[23]"></a>ADC_IRQHandler</STRONG> (Thumb, 54 bytes, Stack size 0 bytes, irq_adc.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
-<P><STRONG><a name="[49]"></a>ADC_init</STRONG> (Thumb, 60 bytes, Stack size 0 bytes, lib_adc.o(.text))
+<P><STRONG><a name="[4b]"></a>ADC_init</STRONG> (Thumb, 60 bytes, Stack size 0 bytes, lib_adc.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[59]"></a>ADC_start_conversion</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, lib_adc.o(.text))
+<P><STRONG><a name="[5b]"></a>ADC_start_conversion</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, lib_adc.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_IRQHandler
-</UL>
-
-<P><STRONG><a name="[4a]"></a>DAC_init</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, lib_dac.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[68]"></a>DAC_convert</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, lib_dac.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
 </UL>
 
 <P><STRONG><a name="[2a]"></a>RIT_IRQHandler</STRONG> (Thumb, 548 bytes, Stack size 8 bytes, irq_rit.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = RIT_IRQHandler &rArr; reserveElevator &rArr; goToHome &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_reset
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_disable
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopElevator
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reserveElevator
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
-<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doRescue
-<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_EnableIRQ
-<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC_start_conversion
+<BR>[Calls]<UL><LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_reset
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
+<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_disable
+<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopElevator
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reserveElevator
+<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doRescue
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_EnableIRQ
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC_start_conversion
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
-<P><STRONG><a name="[5a]"></a>RIT_enable</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, lib_rit.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_init
+<P><STRONG><a name="[5c]"></a>RIT_enable</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, lib_rit.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_init
 </UL>
 
 <P><STRONG><a name="[c7]"></a>RIT_disable</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, lib_rit.o(.text), UNUSED)
 
 <P><STRONG><a name="[c8]"></a>RIT_reset</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, lib_rit.o(.text), UNUSED)
 
-<P><STRONG><a name="[47]"></a>RIT_init</STRONG> (Thumb, 88 bytes, Stack size 4 bytes, lib_rit.o(.text))
+<P><STRONG><a name="[49]"></a>RIT_init</STRONG> (Thumb, 88 bytes, Stack size 4 bytes, lib_rit.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = RIT_init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_enable
+<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_enable
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -524,326 +526,338 @@ Global Symbols
 <P><STRONG><a name="[e]"></a>TIMER0_IRQHandler</STRONG> (Thumb, 182 bytes, Stack size 8 bytes, irq_timer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = TIMER0_IRQHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_set_mcr
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_reset
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_disable
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_isOn
-<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
-<LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
+<BR>[Calls]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_set_mcr
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_reset
+<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_disable
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_isOn
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
+<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
 <P><STRONG><a name="[f]"></a>TIMER1_IRQHandler</STRONG> (Thumb, 122 bytes, Stack size 8 bytes, irq_timer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = TIMER1_IRQHandler &rArr; handleEmergency
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_set_loudspeaker_freq
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_reset
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
-<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_isOn
-<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
-<LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
+<BR>[Calls]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_set_loudspeaker_freq
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_reset
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_isOn
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
+<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
 <P><STRONG><a name="[10]"></a>TIMER2_IRQHandler</STRONG> (Thumb, 232 bytes, Stack size 8 bytes, irq_timer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = TIMER2_IRQHandler &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_set_mcr
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_reset
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_disable
+<BR>[Calls]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_set_mcr
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_reset
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
+<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_disable
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
 <P><STRONG><a name="[11]"></a>TIMER3_IRQHandler</STRONG> (Thumb, 680 bytes, Stack size 24 bytes, irq_timer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 192<LI>Call Chain = TIMER3_IRQHandler &rArr; goToSetup &rArr; selectNote &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateNote
-<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;selectNote
-<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;saveNote
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToSetup
-<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getDisplayPoint
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Ads7846
-<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
-<LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DAC_convert
-<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
-<LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToHome
-<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
-<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
-<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
+<BR>[Calls]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateNote
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;selectNote
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;saveNote
+<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToSetup
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getDisplayPoint
+<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Ads7846
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
+<LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DAC_convert
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
+<LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToHome
+<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
+<LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
+<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
-<P><STRONG><a name="[54]"></a>timer_enable</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, lib_timer.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;saveNote
+<P><STRONG><a name="[56]"></a>timer_enable</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, lib_timer.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;saveNote
 <LI><a href="#[10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER2_IRQHandler
 <LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER1_IRQHandler
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopElevator
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reserveElevator
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
-<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doRescue
+<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopElevator
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reserveElevator
+<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doRescue
 <LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_IRQHandler
-<LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER_init
+<LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER_init
 </UL>
 
-<P><STRONG><a name="[69]"></a>timer_init</STRONG> (Thumb, 196 bytes, Stack size 32 bytes, lib_timer.o(.text))
+<P><STRONG><a name="[6b]"></a>timer_init</STRONG> (Thumb, 196 bytes, Stack size 32 bytes, lib_timer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = timer_init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_EnableIRQ
+<BR>[Calls]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_EnableIRQ
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_init_base
-<LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER_init
+<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_init_base
+<LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER_init
 </UL>
 
-<P><STRONG><a name="[48]"></a>TIMER_init</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, lib_timer.o(.text))
+<P><STRONG><a name="[4a]"></a>TIMER_init</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, lib_timer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = TIMER_init &rArr; timer_init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_init
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
+<BR>[Calls]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_init
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[50]"></a>timer_disable</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, lib_timer.o(.text))
+<P><STRONG><a name="[52]"></a>timer_disable</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, lib_timer.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER2_IRQHandler
 <LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER0_IRQHandler
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopElevator
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reserveElevator
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
-<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
+<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopElevator
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reserveElevator
+<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
 <LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_IRQHandler
 </UL>
 
-<P><STRONG><a name="[51]"></a>timer_reset</STRONG> (Thumb, 62 bytes, Stack size 0 bytes, lib_timer.o(.text))
+<P><STRONG><a name="[53]"></a>timer_reset</STRONG> (Thumb, 62 bytes, Stack size 0 bytes, lib_timer.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER2_IRQHandler
 <LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER1_IRQHandler
 <LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER0_IRQHandler
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reserveElevator
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
-<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reserveElevator
+<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
 <LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_IRQHandler
 </UL>
 
-<P><STRONG><a name="[5d]"></a>timer_set_loudspeaker_freq</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, lib_timer.o(.text))
+<P><STRONG><a name="[5f]"></a>timer_set_loudspeaker_freq</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, lib_timer.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER1_IRQHandler
 </UL>
 
-<P><STRONG><a name="[5c]"></a>timer_set_mcr</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, lib_timer.o(.text))
+<P><STRONG><a name="[5e]"></a>timer_set_mcr</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, lib_timer.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER2_IRQHandler
 <LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER0_IRQHandler
-<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleEmergency
 </UL>
 
 <P><STRONG><a name="[8e]"></a>timer_set_tc</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, lib_timer.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doRescue
+<BR><BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doRescue
 </UL>
 
 <P><STRONG><a name="[8f]"></a>timer_get_tc</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, lib_timer.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopElevator
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doRescue
+<BR><BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopElevator
+<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doRescue
 </UL>
 
-<P><STRONG><a name="[6b]"></a>timer_init_base</STRONG> (Thumb, 28 bytes, Stack size 24 bytes, lib_timer.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_init
+<P><STRONG><a name="[6d]"></a>timer_init_base</STRONG> (Thumb, 28 bytes, Stack size 24 bytes, lib_timer.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_init
 </UL>
 
-<P><STRONG><a name="[6c]"></a>GetASCIICode</STRONG> (Thumb, 26 bytes, Stack size 16 bytes, ascii.o(.text))
+<P><STRONG><a name="[6e]"></a>GetASCIICode</STRONG> (Thumb, 26 bytes, Stack size 16 bytes, ascii.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = GetASCIICode
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
+<BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
 </UL>
 
-<P><STRONG><a name="[72]"></a>delay_ms</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, lib_glcd.o(.text))
+<P><STRONG><a name="[74]"></a>delay_ms</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, lib_glcd.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Initialization
 </UL>
 
-<P><STRONG><a name="[70]"></a>LCD_Clear</STRONG> (Thumb, 1514 bytes, Stack size 24 bytes, lib_glcd.o(.text))
+<P><STRONG><a name="[72]"></a>LCD_Clear</STRONG> (Thumb, 1514 bytes, Stack size 24 bytes, lib_glcd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = LCD_Clear &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait_delay
+<BR>[Calls]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait_delay
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TouchPanel_Calibrate
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToSetup
-<LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToHome
+<BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToSetup
+<LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToHome
+<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TouchPanel_Calibrate
 <LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Initialization
 </UL>
 
 <P><STRONG><a name="[42]"></a>LCD_Initialization</STRONG> (Thumb, 12118 bytes, Stack size 24 bytes, lib_glcd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = LCD_Initialization &rArr; LCD_Clear &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
-<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait_delay
-<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Configuration
+<BR>[Calls]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
+<LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait_delay
+<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Configuration
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[73]"></a>LCD_GetPoint</STRONG> (Thumb, 994 bytes, Stack size 40 bytes, lib_glcd.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_BGR2RGB
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait_delay
+<P><STRONG><a name="[75]"></a>LCD_GetPoint</STRONG> (Thumb, 994 bytes, Stack size 40 bytes, lib_glcd.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_BGR2RGB
+<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait_delay
 </UL>
 
-<P><STRONG><a name="[75]"></a>LCD_SetPoint</STRONG> (Thumb, 206 bytes, Stack size 24 bytes, lib_glcd.o(.text))
+<P><STRONG><a name="[77]"></a>LCD_SetPoint</STRONG> (Thumb, 206 bytes, Stack size 24 bytes, lib_glcd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait_delay
+<BR>[Calls]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait_delay
 </UL>
-<BR>[Called By]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TP_DrawPoint
-<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
+<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TP_DrawPoint
+<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
 </UL>
 
-<P><STRONG><a name="[76]"></a>LCD_DrawLine</STRONG> (Thumb, 250 bytes, Stack size 40 bytes, lib_glcd.o(.text))
+<P><STRONG><a name="[78]"></a>LCD_DrawLine</STRONG> (Thumb, 250 bytes, Stack size 40 bytes, lib_glcd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetPoint
+<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetPoint
 </UL>
-<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCross
-<LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRectangle
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToSetup
-<LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToHome
+<BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCross
+<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRectangle
+<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToSetup
+<LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToHome
 </UL>
 
-<P><STRONG><a name="[77]"></a>LCD_DrawRectangle</STRONG> (Thumb, 60 bytes, Stack size 32 bytes, lib_glcd.o(.text))
+<P><STRONG><a name="[79]"></a>LCD_DrawRectangle</STRONG> (Thumb, 60 bytes, Stack size 32 bytes, lib_glcd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = LCD_DrawRectangle &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
+<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
 </UL>
-<BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;selectNote
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToSetup
+<BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;selectNote
+<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToSetup
 </UL>
 
-<P><STRONG><a name="[78]"></a>PutChar</STRONG> (Thumb, 106 bytes, Stack size 56 bytes, lib_glcd.o(.text))
+<P><STRONG><a name="[7a]"></a>PutChar</STRONG> (Thumb, 106 bytes, Stack size 56 bytes, lib_glcd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetPoint
-<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetASCIICode
+<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetPoint
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetASCIICode
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
+<BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
 </UL>
 
-<P><STRONG><a name="[5e]"></a>GUI_Text</STRONG> (Thumb, 80 bytes, Stack size 32 bytes, lib_glcd.o(.text))
+<P><STRONG><a name="[60]"></a>GUI_Text</STRONG> (Thumb, 80 bytes, Stack size 32 bytes, lib_glcd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
+<BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TouchPanel_Calibrate
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateNote
-<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;selectNote
-<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;saveNote
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToSetup
+<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateNote
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;selectNote
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;saveNote
+<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToSetup
 <LI><a href="#[10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER2_IRQHandler
-<LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToHome
+<LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToHome
+<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TouchPanel_Calibrate
 </UL>
 
-<P><STRONG><a name="[7a]"></a>LPC17xx_SPI_SetSpeed</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, touchpanel.o(.text), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADS7843_SPI_Init
+<P><STRONG><a name="[7c]"></a>LPC17xx_SPI_SetSpeed</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, touchpanel.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADS7843_SPI_Init
 </UL>
 
-<P><STRONG><a name="[7b]"></a>TP_Init</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, touchpanel.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADS7843_SPI_Init
+<P><STRONG><a name="[43]"></a>TP_Init</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, touchpanel.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = TP_Init &rArr; ADS7843_SPI_Init
+</UL>
+<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADS7843_SPI_Init
+</UL>
+<BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[7f]"></a>Read_X</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, touchpanel.o(.text))
+<P><STRONG><a name="[80]"></a>Read_X</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, touchpanel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = Read_X &rArr; RD_AD &rArr; DelayUS
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RD_AD
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WR_CMD
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DelayUS
+<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RD_AD
+<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WR_CMD
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DelayUS
 </UL>
-<BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TP_GetAdXY
+<BR>[Called By]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TP_GetAdXY
 </UL>
 
-<P><STRONG><a name="[80]"></a>Read_Y</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, touchpanel.o(.text))
+<P><STRONG><a name="[81]"></a>Read_Y</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, touchpanel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = Read_Y &rArr; RD_AD &rArr; DelayUS
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RD_AD
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WR_CMD
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DelayUS
+<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RD_AD
+<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WR_CMD
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DelayUS
 </UL>
-<BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TP_GetAdXY
+<BR>[Called By]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TP_GetAdXY
 </UL>
 
-<P><STRONG><a name="[81]"></a>TP_GetAdXY</STRONG> (Thumb, 34 bytes, Stack size 24 bytes, touchpanel.o(.text))
+<P><STRONG><a name="[82]"></a>TP_GetAdXY</STRONG> (Thumb, 34 bytes, Stack size 24 bytes, touchpanel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = TP_GetAdXY &rArr; Read_Y &rArr; RD_AD &rArr; DelayUS
 </UL>
-<BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Y
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_X
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DelayUS
+<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Y
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_X
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DelayUS
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Ads7846
-</UL>
-
-<P><STRONG><a name="[82]"></a>TP_DrawPoint</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, touchpanel.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetPoint
+<BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Ads7846
 </UL>
 
-<P><STRONG><a name="[83]"></a>DrawCross</STRONG> (Thumb, 356 bytes, Stack size 24 bytes, touchpanel.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
-</UL>
-<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TouchPanel_Calibrate
+<P><STRONG><a name="[83]"></a>TP_DrawPoint</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, touchpanel.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetPoint
 </UL>
 
-<P><STRONG><a name="[5f]"></a>Read_Ads7846</STRONG> (Thumb, 524 bytes, Stack size 112 bytes, touchpanel.o(.text))
+<P><STRONG><a name="[84]"></a>DrawCross</STRONG> (Thumb, 356 bytes, Stack size 24 bytes, touchpanel.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = DrawCross &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
+</UL>
+<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
+</UL>
+<BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TouchPanel_Calibrate
+</UL>
+
+<P><STRONG><a name="[61]"></a>Read_Ads7846</STRONG> (Thumb, 524 bytes, Stack size 112 bytes, touchpanel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = Read_Ads7846 &rArr; TP_GetAdXY &rArr; Read_Y &rArr; RD_AD &rArr; DelayUS
 </UL>
-<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TP_GetAdXY
-<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TP_GetAdXY
+<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TouchPanel_Calibrate
-<LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
-</UL>
-
-<P><STRONG><a name="[85]"></a>setCalibrationMatrix</STRONG> (Thumb, 356 bytes, Stack size 32 bytes, touchpanel.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmpeq
-</UL>
-<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TouchPanel_Calibrate
+<BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
+<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TouchPanel_Calibrate
 </UL>
 
-<P><STRONG><a name="[60]"></a>getDisplayPoint</STRONG> (Thumb, 238 bytes, Stack size 80 bytes, touchpanel.o(.text))
+<P><STRONG><a name="[86]"></a>setCalibrationMatrix</STRONG> (Thumb, 356 bytes, Stack size 32 bytes, touchpanel.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = setCalibrationMatrix &rArr; __aeabi_cdcmpeq
+</UL>
+<BR>[Calls]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmpeq
+</UL>
+<BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TouchPanel_Calibrate
+</UL>
+
+<P><STRONG><a name="[62]"></a>getDisplayPoint</STRONG> (Thumb, 238 bytes, Stack size 80 bytes, touchpanel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = getDisplayPoint &rArr; __aeabi_dmul
 </UL>
-<BR>[Calls]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
-<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2uiz
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmpeq
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<BR>[Calls]<UL><LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2uiz
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmpeq
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
 </UL>
 
-<P><STRONG><a name="[8b]"></a>TouchPanel_Calibrate</STRONG> (Thumb, 108 bytes, Stack size 16 bytes, touchpanel.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setCalibrationMatrix
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCross
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DelayUS
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Ads7846
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
+<P><STRONG><a name="[44]"></a>TouchPanel_Calibrate</STRONG> (Thumb, 108 bytes, Stack size 16 bytes, touchpanel.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 184<LI>Call Chain = TouchPanel_Calibrate &rArr; Read_Ads7846 &rArr; TP_GetAdXY &rArr; Read_Y &rArr; RD_AD &rArr; DelayUS
+</UL>
+<BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setCalibrationMatrix
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCross
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DelayUS
+<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
+<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Ads7846
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
+</UL>
+<BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[57]"></a>reserveElevator</STRONG> (Thumb, 130 bytes, Stack size 8 bytes, lib_elevator.o(.text))
+<P><STRONG><a name="[59]"></a>reserveElevator</STRONG> (Thumb, 130 bytes, Stack size 8 bytes, lib_elevator.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = reserveElevator &rArr; goToHome &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_reset
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_disable
-<LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
-<LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToHome
-<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
+<BR>[Calls]<UL><LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_reset
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
+<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_disable
+<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
+<LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToHome
+<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_IRQHandler
 </UL>
@@ -851,128 +865,128 @@ Global Symbols
 <P><STRONG><a name="[8c]"></a>isAlarmDetectedFloorZero</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, lib_elevator.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = isAlarmDetectedFloorZero
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_isOn
+<BR>[Calls]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_isOn
 </UL>
-<BR>[Called By]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
+<BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
 </UL>
 
 <P><STRONG><a name="[8d]"></a>isAlarmDetectedFloorOne</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, lib_elevator.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = isAlarmDetectedFloorOne
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_isOn
+<BR>[Calls]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_isOn
 </UL>
-<BR>[Called By]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
+<BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveElevator
 </UL>
 
-<P><STRONG><a name="[52]"></a>moveElevator</STRONG> (Thumb, 116 bytes, Stack size 16 bytes, lib_elevator.o(.text))
+<P><STRONG><a name="[54]"></a>moveElevator</STRONG> (Thumb, 116 bytes, Stack size 16 bytes, lib_elevator.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = moveElevator &rArr; isAlarmDetectedFloorOne
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isAlarmDetectedFloorOne
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isAlarmDetectedFloorZero
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_get_tc
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_set_tc
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_reset
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_disable
-<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_reset
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
+<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_disable
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_IRQHandler
 </UL>
 
-<P><STRONG><a name="[53]"></a>stopElevator</STRONG> (Thumb, 60 bytes, Stack size 8 bytes, lib_elevator.o(.text))
+<P><STRONG><a name="[55]"></a>stopElevator</STRONG> (Thumb, 60 bytes, Stack size 8 bytes, lib_elevator.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = stopElevator
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_get_tc
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_disable
-<LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
+<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_disable
+<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_IRQHandler
 </UL>
 
-<P><STRONG><a name="[43]"></a>goToHome</STRONG> (Thumb, 272 bytes, Stack size 8 bytes, lib_maintenance.o(.text))
+<P><STRONG><a name="[45]"></a>goToHome</STRONG> (Thumb, 272 bytes, Stack size 8 bytes, lib_maintenance.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = goToHome &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
+<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
+<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reserveElevator
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reserveElevator
 <LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[62]"></a>selectNote</STRONG> (Thumb, 406 bytes, Stack size 16 bytes, lib_maintenance.o(.text))
+<P><STRONG><a name="[64]"></a>selectNote</STRONG> (Thumb, 406 bytes, Stack size 16 bytes, lib_maintenance.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = selectNote &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRectangle
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
-<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
+<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRectangle
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
+<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
 </UL>
-<BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToSetup
+<BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;goToSetup
 <LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
 </UL>
 
-<P><STRONG><a name="[61]"></a>goToSetup</STRONG> (Thumb, 166 bytes, Stack size 16 bytes, lib_maintenance.o(.text))
+<P><STRONG><a name="[63]"></a>goToSetup</STRONG> (Thumb, 166 bytes, Stack size 16 bytes, lib_maintenance.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = goToSetup &rArr; selectNote &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRectangle
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
-<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;selectNote
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
-<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
+<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRectangle
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
+<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;selectNote
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
+<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
 </UL>
 
-<P><STRONG><a name="[64]"></a>updateNote</STRONG> (Thumb, 78 bytes, Stack size 8 bytes, lib_maintenance.o(.text))
+<P><STRONG><a name="[66]"></a>updateNote</STRONG> (Thumb, 78 bytes, Stack size 8 bytes, lib_maintenance.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = updateNote &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
-<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
+<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
+<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
 </UL>
 
-<P><STRONG><a name="[63]"></a>saveNote</STRONG> (Thumb, 282 bytes, Stack size 8 bytes, lib_maintenance.o(.text))
+<P><STRONG><a name="[65]"></a>saveNote</STRONG> (Thumb, 282 bytes, Stack size 8 bytes, lib_maintenance.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = saveNote &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
-<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
+<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
+<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
 </UL>
 
-<P><STRONG><a name="[55]"></a>handleEmergency</STRONG> (Thumb, 228 bytes, Stack size 8 bytes, lib_emergency.o(.text))
+<P><STRONG><a name="[57]"></a>handleEmergency</STRONG> (Thumb, 228 bytes, Stack size 8 bytes, lib_emergency.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = handleEmergency
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_set_mcr
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_reset
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_disable
-<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
-<LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
+<BR>[Calls]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_set_mcr
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_reset
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
+<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_disable
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
+<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
 <LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER1_IRQHandler
 <LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_IRQHandler
 </UL>
 
-<P><STRONG><a name="[58]"></a>doRescue</STRONG> (Thumb, 92 bytes, Stack size 16 bytes, lib_emergency.o(.text))
+<P><STRONG><a name="[5a]"></a>doRescue</STRONG> (Thumb, 92 bytes, Stack size 16 bytes, lib_emergency.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = doRescue
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_get_tc
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_set_tc
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
-<LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_enable
+<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_IRQHandler
 </UL>
 
-<P><STRONG><a name="[6d]"></a>__aeabi_memcpy</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memcpy_v6.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetASCIICode
+<P><STRONG><a name="[6f]"></a>__aeabi_memcpy</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memcpy_v6.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetASCIICode
 </UL>
 
 <P><STRONG><a name="[90]"></a>__rt_memcpy</STRONG> (Thumb, 138 bytes, Stack size 0 bytes, rt_memcpy_v6.o(.text), UNUSED)
@@ -981,10 +995,10 @@ Global Symbols
 
 <P><STRONG><a name="[c9]"></a>_memcpy_lastbytes</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rt_memcpy_v6.o(.text), UNUSED)
 
-<P><STRONG><a name="[84]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 4 bytes, rt_memclr_w.o(.text))
+<P><STRONG><a name="[85]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 4 bytes, rt_memclr_w.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __aeabi_memclr4
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Ads7846
+<BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Ads7846
 </UL>
 
 <P><STRONG><a name="[ca]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 4 bytes, rt_memclr_w.o(.text), UNUSED)
@@ -1046,10 +1060,10 @@ Global Symbols
 
 <P><STRONG><a name="[d7]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[88]"></a>__aeabi_dadd</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, daddsub_clz.o(x$fpl$dadd))
+<P><STRONG><a name="[89]"></a>__aeabi_dadd</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, daddsub_clz.o(x$fpl$dadd))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_dadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getDisplayPoint
+<BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getDisplayPoint
 </UL>
 
 <P><STRONG><a name="[95]"></a>_dadd</STRONG> (Thumb, 332 bytes, Stack size 16 bytes, daddsub_clz.o(x$fpl$dadd), UNUSED)
@@ -1062,10 +1076,10 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpeq
 </UL>
 
-<P><STRONG><a name="[89]"></a>__aeabi_ddiv</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, ddiv.o(x$fpl$ddiv))
+<P><STRONG><a name="[8a]"></a>__aeabi_ddiv</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, ddiv.o(x$fpl$ddiv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_ddiv
 </UL>
-<BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getDisplayPoint
+<BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getDisplayPoint
 </UL>
 
 <P><STRONG><a name="[99]"></a>_ddiv</STRONG> (Thumb, 552 bytes, Stack size 32 bytes, ddiv.o(x$fpl$ddiv), UNUSED)
@@ -1073,11 +1087,11 @@ Global Symbols
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
-<P><STRONG><a name="[87]"></a>__aeabi_cdcmpeq</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, deqf.o(x$fpl$deqf))
+<P><STRONG><a name="[88]"></a>__aeabi_cdcmpeq</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, deqf.o(x$fpl$deqf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_cdcmpeq
 </UL>
-<BR>[Called By]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setCalibrationMatrix
-<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getDisplayPoint
+<BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setCalibrationMatrix
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getDisplayPoint
 </UL>
 
 <P><STRONG><a name="[9a]"></a>_dcmpeq</STRONG> (Thumb, 120 bytes, Stack size 32 bytes, deqf.o(x$fpl$deqf), UNUSED)
@@ -1085,7 +1099,7 @@ Global Symbols
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dcmp_Inf
 </UL>
 
-<P><STRONG><a name="[67]"></a>__aeabi_d2iz</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dfix.o(x$fpl$dfix))
+<P><STRONG><a name="[69]"></a>__aeabi_d2iz</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dfix.o(x$fpl$dfix))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_d2iz
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
@@ -1095,33 +1109,33 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
-<P><STRONG><a name="[8a]"></a>__aeabi_d2uiz</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dfixu.o(x$fpl$dfixu))
+<P><STRONG><a name="[8b]"></a>__aeabi_d2uiz</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dfixu.o(x$fpl$dfixu))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_d2uiz
 </UL>
-<BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getDisplayPoint
+<BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getDisplayPoint
 </UL>
 
 <P><STRONG><a name="[9d]"></a>_dfixu</STRONG> (Thumb, 90 bytes, Stack size 32 bytes, dfixu.o(x$fpl$dfixu), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
-<P><STRONG><a name="[86]"></a>__aeabi_i2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setCalibrationMatrix
+<P><STRONG><a name="[87]"></a>__aeabi_i2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt))
+<BR><BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setCalibrationMatrix
 </UL>
 
 <P><STRONG><a name="[d8]"></a>_dflt</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt), UNUSED)
 
-<P><STRONG><a name="[65]"></a>__aeabi_ui2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dfltu))
-<BR><BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getDisplayPoint
+<P><STRONG><a name="[67]"></a>__aeabi_ui2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dfltu))
+<BR><BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getDisplayPoint
 <LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
 </UL>
 
 <P><STRONG><a name="[d9]"></a>_dfltu</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dfltu), UNUSED)
 
-<P><STRONG><a name="[66]"></a>__aeabi_dmul</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dmul.o(x$fpl$dmul))
+<P><STRONG><a name="[68]"></a>__aeabi_dmul</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dmul.o(x$fpl$dmul))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_dmul
 </UL>
-<BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getDisplayPoint
+<BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getDisplayPoint
 <LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER3_IRQHandler
 </UL>
 
@@ -1156,86 +1170,88 @@ Global Symbols
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[4d]"></a>NVIC_DisableIRQ</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, irq_button.o(.text))
+<P><STRONG><a name="[4f]"></a>NVIC_DisableIRQ</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, irq_button.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[21]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EINT2_IRQHandler
 <LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EINT1_IRQHandler
 <LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EINT0_IRQHandler
 </UL>
 
-<P><STRONG><a name="[4f]"></a>NVIC_SetPriority</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, lib_button.o(.text))
+<P><STRONG><a name="[51]"></a>NVIC_SetPriority</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, lib_button.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = NVIC_SetPriority
 </UL>
-<BR>[Called By]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_init
+<BR>[Called By]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_init
 </UL>
 
-<P><STRONG><a name="[4e]"></a>NVIC_EnableIRQ</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, lib_button.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_init
+<P><STRONG><a name="[50]"></a>NVIC_EnableIRQ</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, lib_button.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_init
 </UL>
 
-<P><STRONG><a name="[56]"></a>NVIC_EnableIRQ</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, irq_rit.o(.text))
+<P><STRONG><a name="[58]"></a>NVIC_EnableIRQ</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, irq_rit.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_IRQHandler
 </UL>
 
-<P><STRONG><a name="[6a]"></a>NVIC_EnableIRQ</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, lib_timer.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_init
+<P><STRONG><a name="[6c]"></a>NVIC_EnableIRQ</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, lib_timer.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_init
 </UL>
 
-<P><STRONG><a name="[71]"></a>LCD_Configuration</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, lib_glcd.o(.text))
+<P><STRONG><a name="[73]"></a>LCD_Configuration</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, lib_glcd.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Initialization
 </UL>
 
-<P><STRONG><a name="[6f]"></a>wait_delay</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, lib_glcd.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetPoint
-<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_GetPoint
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
+<P><STRONG><a name="[71]"></a>wait_delay</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, lib_glcd.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetPoint
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_GetPoint
+<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
+<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
 <LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Initialization
 </UL>
 
-<P><STRONG><a name="[6e]"></a>LCD_SetCursor</STRONG> (Thumb, 1356 bytes, Stack size 24 bytes, lib_glcd.o(.text))
+<P><STRONG><a name="[70]"></a>LCD_SetCursor</STRONG> (Thumb, 1356 bytes, Stack size 24 bytes, lib_glcd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait_delay
+<BR>[Calls]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait_delay
 </UL>
-<BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetPoint
-<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_GetPoint
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
-</UL>
-
-<P><STRONG><a name="[74]"></a>LCD_BGR2RGB</STRONG> (Thumb, 26 bytes, Stack size 12 bytes, lib_glcd.o(.text), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_GetPoint
+<BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetPoint
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_GetPoint
+<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
 </UL>
 
-<P><STRONG><a name="[79]"></a>ADS7843_SPI_Init</STRONG> (Thumb, 128 bytes, Stack size 8 bytes, touchpanel.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPC17xx_SPI_SetSpeed
-</UL>
-<BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TP_Init
+<P><STRONG><a name="[76]"></a>LCD_BGR2RGB</STRONG> (Thumb, 26 bytes, Stack size 12 bytes, lib_glcd.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_GetPoint
 </UL>
 
-<P><STRONG><a name="[7e]"></a>DelayUS</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, touchpanel.o(.text))
+<P><STRONG><a name="[7b]"></a>ADS7843_SPI_Init</STRONG> (Thumb, 128 bytes, Stack size 8 bytes, touchpanel.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = ADS7843_SPI_Init
+</UL>
+<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPC17xx_SPI_SetSpeed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TP_Init
+</UL>
+
+<P><STRONG><a name="[7f]"></a>DelayUS</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, touchpanel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = DelayUS
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TouchPanel_Calibrate
-<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TP_GetAdXY
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Y
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_X
-<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RD_AD
+<BR>[Called By]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TP_GetAdXY
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Y
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_X
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RD_AD
+<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TouchPanel_Calibrate
 </UL>
 
-<P><STRONG><a name="[7d]"></a>WR_CMD</STRONG> (Thumb, 56 bytes, Stack size 0 bytes, touchpanel.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Y
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_X
-<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RD_AD
+<P><STRONG><a name="[7e]"></a>WR_CMD</STRONG> (Thumb, 56 bytes, Stack size 0 bytes, touchpanel.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Y
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_X
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RD_AD
 </UL>
 
-<P><STRONG><a name="[7c]"></a>RD_AD</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, touchpanel.o(.text))
+<P><STRONG><a name="[7d]"></a>RD_AD</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, touchpanel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = RD_AD &rArr; DelayUS
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WR_CMD
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DelayUS
+<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WR_CMD
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DelayUS
 </UL>
-<BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Y
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_X
+<BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Y
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_X
 </UL>
 
 <P><STRONG><a name="[a0]"></a>_dadd1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, daddsub_clz.o(x$fpl$dadd), UNUSED)
