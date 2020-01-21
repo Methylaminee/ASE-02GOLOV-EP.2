@@ -31,7 +31,8 @@ void ADC_IRQHandler(void) {
 	
   AD_current = ((LPC_ADC->ADGDR>>4) & 0xFFF);/* Read Conversion Result             */
   if(AD_current != AD_last){
-	  IDX_count = AD_current*7/0xFFF;
+		/*	Time Rotation > LOWER, Anti Timer Rotation > HIGHER	*/
+	  IDX_count = 7 - AD_current*7/0xFFF;
 		//FRQ_count = freqs[IDX_count];
 		AD_last = AD_current;
   }
