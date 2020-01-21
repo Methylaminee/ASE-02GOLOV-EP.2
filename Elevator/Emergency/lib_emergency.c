@@ -23,6 +23,7 @@ extern const unsigned int MAX_ELEVATOR_POSITION;
 extern const unsigned int LOUDSPEAKER_TIMER;
 extern const unsigned int EMERGENCY_TIMER;
 extern const unsigned int POSITION_TIMER;
+extern const unsigned int MOVING_TIMER;
 extern const unsigned int LOUDSPEAKER_MCR;
 extern const unsigned int EMERGENCY_MCR;
 extern const unsigned int DEFAULT_MCR_BASE;
@@ -42,6 +43,7 @@ void handleEmergency(unsigned int isEnabled) {
 	if (isEnabled) {
 		isEmergency = 1;
 		/*	Stop Elevator	*/
+		timer_disable(MOVING_TIMER);
 		timer_disable(POSITION_TIMER);
 		timer_disable(IDLE_TIMER);
 		/*	Status LED, Alarm LEDs, Loudspeaker	*/
@@ -78,6 +80,7 @@ void handleEmergency(unsigned int isEnabled) {
 void doRescue(unsigned int floor) {
 	if (!isRescuing) {
 		isRescuing = 1;
+		handleEmergency(0);
 		/*	when called from request panel elevator move to selected floor > RESCUE > loudspeaker stops emit > LEDS usual	behaviour */
 		requestedFloor = floor;
 		if (floor) {
@@ -91,8 +94,9 @@ void doRescue(unsigned int floor) {
 			/*	If elevator is changing direction */
 			timer_set_tc(POSITION_TIMER, MAX_ELEVATOR_POSITION - timer_get_tc(POSITION_TIMER));
 		}
-		/*	If elevator isn't changing direction */
-		timer_enable(POSITION_TIMER);
 		isElevatorMovingUpstairs &= floor;
+		/*	If elevator isn't changing direction */
+		timer_enable(MOVING_TIMER);
+		timer_enable(POSITION_TIMER);
 	}
 }

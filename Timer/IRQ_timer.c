@@ -63,7 +63,7 @@ extern int note_two_idx;
 unsigned int isTouching = 0;
 
 
-/* TIMER0 - 2Hz(0.5s)        */
+/* TIMER0 - 2Hz(0.5s) and 5Hz for 3s     */
 void TIMER0_IRQHandler(void) {
 	if (LPC_TIM0->IR & (1<<0)) {
 		if (LED_isOn(LED_CONTROLLER_STATUS)){
@@ -157,7 +157,7 @@ void TIMER2_IRQHandler(void) {
   return;
 }
 
-/* TIMER3 - 166mHz(60s)      */
+/* TIMER3 - 166mHz(60s)    + touchscreen refresh 50us  */
 void TIMER3_IRQHandler(void) {
 	/*	TOUCHSCREEN	*/
 	if (LPC_TIM3->IR & (1<<0)) {
