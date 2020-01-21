@@ -1,0 +1,11 @@
+.\lib_glcd.o: GLCD\lib_glcd.c
+.\lib_glcd.o: GLCD\glcd.h
+.\lib_glcd.o: C:\Keil_v5\ARM\INC\NXP\LPC17xx\LPC17xx.h
+.\lib_glcd.o: C:\Keil_v5\ARM\CMSIS\Include\core_cm3.h
+.\lib_glcd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\lib_glcd.o: C:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h
+.\lib_glcd.o: C:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h
+.\lib_glcd.o: C:\Keil_v5\ARM\INC\NXP\LPC17xx\system_LPC17xx.h
+.\lib_glcd.o: GLCD\hz.h
+.\lib_glcd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\lib_glcd.o: GLCD\ascii.h

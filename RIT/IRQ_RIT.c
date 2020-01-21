@@ -73,7 +73,7 @@ void RIT_IRQHandler (void) {
 	/* buttons management */
 	/* EMERGENCY - INT0 pressed */
 	if (emergencyHappened!=0) {
-		if ((LPC_GPIO2->FIOPIN & (1<<10)) == 0 && (isElevatorBetweenFloors || isOnMaintenance)) {
+		if ((LPC_GPIO2->FIOPIN & (1<<10)) == 0 && ((isJoystickEnabled && isElevatorBetweenFloors) || isOnMaintenance)) {
 			if (emergencyHappened == 1) {
 				emergencyHappened++;				
 				if (!isEmergency) {
@@ -94,7 +94,7 @@ void RIT_IRQHandler (void) {
 	}
 	/* FLOOR.1 - KEY1 pressed */
 	if (reservedOne!=0) { 
-		if((LPC_GPIO2->FIOPIN & (1<<11)) == 0 && isElevatorFree && !isOnMaintenance) {	
+		if((LPC_GPIO2->FIOPIN & (1<<11)) == 0 && (isEmergency || isElevatorFree) && !isOnMaintenance) {	
 			reservedOne++;
 			if (!isEmergency) {
 				reserveElevator(1);
@@ -109,7 +109,7 @@ void RIT_IRQHandler (void) {
 	}
 	/* FLOOR.0 - KEY2 pressed */
 	if (reservedZero!=0) {
-		if ((LPC_GPIO2->FIOPIN & (1<<12)) == 0 && isElevatorFree && !isOnMaintenance) {	
+		if ((LPC_GPIO2->FIOPIN & (1<<12)) == 0 && (isEmergency || isElevatorFree) && !isOnMaintenance) {	
 			reservedZero++;
 			if (!isEmergency) {
 				reserveElevator(0);
